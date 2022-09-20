@@ -9,6 +9,7 @@
 import UIKit
 import CoreBluetooth
 
+
 class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     var manager:CBCentralManager? = nil
     var mainPeripheral:CBPeripheral? = nil
@@ -19,12 +20,42 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     
     @IBOutlet weak var recievedMessageText: UILabel!
     
+    func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
+            DispatchQueue.global(qos: .background).async {
+                background?()
+                if let completion = completion {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+                        completion()
+                    })
+                }
+            }
+        }
+
+    func sendBackgroundMessages() {
+        let helloWorld = "Hello World!"
+        let dataToSend = helloWorld.data(using: String.Encoding.utf8)
+        if (self.mainPeripheral != nil && self.mainCharacteristic != nil) {
+            self.mainPeripheral?.writeValue(dataToSend!, for: self.mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
+        } else {
+            print("haven't discovered device yet")
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+            self.sendBackgroundMessages()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         manager = CBCentralManager(delegate: self, queue: nil);
         
         customiseNavigationBar()
+        
+        background(delay: 3.0, background: {
+            self.sendBackgroundMessages()
+        }, completion: {
+            print("completed")
+        })
     }
     
     func customiseNavigationBar () {
