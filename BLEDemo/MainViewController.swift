@@ -31,16 +31,25 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
             }
         }
 
-    func sendBackgroundMessages() {
-        let helloWorld = "Hello World!"
-        let dataToSend = helloWorld.data(using: String.Encoding.utf8)
+    func sendBackgroundMessages(messageToSend: String) {
+        let messageList = ["Voltage", "Current", "Temperature"]
+        let dataToSend = messageToSend.data(using: String.Encoding.utf8)
         if (self.mainPeripheral != nil && self.mainCharacteristic != nil) {
             self.mainPeripheral?.writeValue(dataToSend!, for: self.mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
         } else {
             print("haven't discovered device yet")
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-            self.sendBackgroundMessages()
+        guard let nextMessage = messageList.firstIndex(where: {$0 == messageToSend}) else {return}
+        print(messageList[nextMessage])
+        if nextMessage == 2 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+                self.sendBackgroundMessages(messageToSend: messageList[0])
+            }
+        }
+        else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+                self.sendBackgroundMessages(messageToSend: messageList[nextMessage + 1])
+            }
         }
     }
     
@@ -51,11 +60,11 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         
         customiseNavigationBar()
         
-        background(delay: 3.0, background: {
-            self.sendBackgroundMessages()
-        }, completion: {
-            print("completed")
-        })
+//        background(delay: 3.0, background: {
+//            self.sendBackgroundMessages(messageToSend: "Current")
+//        }, completion: {
+//            print("completed")
+//        })
     }
     
     func customiseNavigationBar () {
@@ -223,9 +232,12 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         } else if (characteristic.uuid.uuidString == BLECharacteristic) {
             //data recieved
             if(characteristic.value != nil) {
-                let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)!
-            
-                recievedMessageText.text = stringValue
+                let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)
+                if (stringValue != nil) {
+                    let splitString = stringValue!.components(separatedBy: "\n")
+                    print(splitString)
+                    recievedMessageText.text = splitString.last
+                }
             }
         }
         
