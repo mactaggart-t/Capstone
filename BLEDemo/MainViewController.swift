@@ -19,39 +19,12 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     let BLECharacteristic = "DFB1"
     
     @IBOutlet weak var recievedMessageText: UILabel!
+    var nextMessageText: String = "";
     
-    func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
-            DispatchQueue.global(qos: .background).async {
-                background?()
-                if let completion = completion {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-                        completion()
-                    })
-                }
-            }
-        }
-
-    func sendBackgroundMessages(messageToSend: String) {
-        let messageList = ["Voltage", "Current", "Temperature"]
-        let dataToSend = messageToSend.data(using: String.Encoding.utf8)
-        if (self.mainPeripheral != nil && self.mainCharacteristic != nil) {
-            self.mainPeripheral?.writeValue(dataToSend!, for: self.mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
-        } else {
-            print("haven't discovered device yet")
-        }
-        guard let nextMessage = messageList.firstIndex(where: {$0 == messageToSend}) else {return}
-        print(messageList[nextMessage])
-        if nextMessage == 2 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-                self.sendBackgroundMessages(messageToSend: messageList[0])
-            }
-        }
-        else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-                self.sendBackgroundMessages(messageToSend: messageList[nextMessage + 1])
-            }
-        }
+    func getVoltageFromBackend() {
+        
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,11 +33,6 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         
         customiseNavigationBar()
         
-//        background(delay: 3.0, background: {
-//            self.sendBackgroundMessages(messageToSend: "Current")
-//        }, completion: {
-//            print("completed")
-//        })
     }
     
     func customiseNavigationBar () {
@@ -234,9 +202,15 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
             if(characteristic.value != nil) {
                 let stringValue = String(data: characteristic.value!, encoding: String.Encoding.utf8)
                 if (stringValue != nil) {
-                    let splitString = stringValue!.components(separatedBy: "\n")
-                    print(splitString)
-                    recievedMessageText.text = splitString.last
+                    if (nextMessageText.hasSuffix("eos")) {
+                        nextMessageText = ""
+                    }
+                    nextMessageText = nextMessageText + stringValue!;
+                    if (nextMessageText.hasSuffix("eos")) {
+                        var tempStr = nextMessageText
+                        tempStr.removeLast(3)
+                        recievedMessageText.text = tempStr;
+                    }
                 }
             }
         }

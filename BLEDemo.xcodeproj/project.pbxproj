@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3590952828ECC79B00E8A604 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3590952728ECC79A00E8A604 /* LoginViewController.swift */; };
 		785098841D365ADD00976091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785098831D365ADD00976091 /* AppDelegate.swift */; };
 		785098861D365ADD00976091 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785098851D365ADD00976091 /* MainViewController.swift */; };
 		785098891D365ADD00976091 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 785098871D365ADD00976091 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3590952728ECC79A00E8A604 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		785098801D365ADD00976091 /* BLEDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		785098831D365ADD00976091 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		785098851D365ADD00976091 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				7850988A1D365ADD00976091 /* Assets.xcassets */,
 				7850988C1D365ADD00976091 /* LaunchScreen.storyboard */,
 				7850988F1D365ADD00976091 /* Info.plist */,
+				3590952728ECC79A00E8A604 /* LoginViewController.swift */,
 			);
 			path = BLEDemo;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3590952828ECC79B00E8A604 /* LoginViewController.swift in Sources */,
 				785098861D365ADD00976091 /* MainViewController.swift in Sources */,
 				785098841D365ADD00976091 /* AppDelegate.swift in Sources */,
 				785098961D365E8E00976091 /* ScanTableViewController.swift in Sources */,
@@ -304,7 +308,7 @@
 				INFOPLIST_FILE = BLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = RickRedSix.BLEDemo1;
+				PRODUCT_BUNDLE_IDENTIFIER = mactaggart123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -322,7 +326,7 @@
 				INFOPLIST_FILE = BLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = RickRedSix.BLEDemo1;
+				PRODUCT_BUNDLE_IDENTIFIER = mactaggart123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
