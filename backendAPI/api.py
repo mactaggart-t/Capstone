@@ -46,7 +46,7 @@ def get_data(table):
 # delete row from a table based on session id
 def delete_data(table, session_id):
     cur = conn.cursor()
-    cur.execute("DELETE FROM " + table + " WHERE users_id=%s", (session_id))
+    cur.execute("DELETE FROM " + table + " WHERE session_id=%s", (session_id))
     conn.commit()
 
 ### TESTING ###
