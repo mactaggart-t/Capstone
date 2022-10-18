@@ -1,3 +1,5 @@
 .gitignore.swp
 backendAPI/__pycache__/
 .DS_Store
+.idea
+BLEDemo.xcodeproj

@@ -27,6 +27,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     var voltageTwoCache: [Dictionary<String, String>] = []
     var currentCache: [Dictionary<String, String>] = []
     var temperatureCache: [Dictionary<String, String>] = []
+    let urlBase = "http://10.110.135.154:5000/"
     
     @IBOutlet weak var recievedMessageText: UILabel!
     var nextMessageText: String = "";
@@ -66,7 +67,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
 
         let session = URLSession(configuration: config)
 
-        let url = URL(string: "http://10.110.135.154:5000/loadRawData")
+        let url = URL(string: urlBase + "loadRawData")
         var urlRequest = URLRequest(url: url!)
         urlRequest.httpMethod = "POST"
 
