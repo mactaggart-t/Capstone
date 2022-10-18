@@ -52,3 +52,61 @@ Connect your iPhone to your Mac via USB or USB-C and select your phone from the
 dropdown at the top center of the screen. You should then be able to hit the play button and
 build the app
 
+## Backend API Data Format
+
+Data will be sent from the frontend to the backend in the following format (after parsing):
+
+```json
+{
+  "totalVoltage": [
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    },
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    }
+  ],
+  "voltageOne": [
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    },
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    }
+  ],
+  "voltageTwo": [
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    },
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    }
+  ],
+  "current": [
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    },
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    }
+  ],
+  "temperature": [
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    },
+    {
+      "value": "10.5",
+      "timestamp": "datetime format TBD"
+    }
+  ]
+}
+```
