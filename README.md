@@ -110,3 +110,8 @@ Data will be sent from the frontend to the backend in the following format (afte
   ]
 }
 ```
+
+Data will be sent from the backend to the database in the following format:
+float: "xxx.xx" / "5555.55"
+datetime: "yyyymmddss" / "2022081743"
+string: "xxxxxx" / "banana"
