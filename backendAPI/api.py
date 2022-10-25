@@ -36,6 +36,7 @@ class LoadRawData(Resource):
         voltage_one = data_dict.get('voltageOne')
         voltage_two = data_dict.get('voltageTwo')
         current = data_dict.get('current')
+        
 
 api.add_resource(Voltage, '/voltage')
 api.add_resource(Current, '/current')

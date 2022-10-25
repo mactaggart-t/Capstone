@@ -27,13 +27,14 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     var voltageTwoCache: [Dictionary<String, String>] = []
     var currentCache: [Dictionary<String, String>] = []
     var temperatureCache: [Dictionary<String, String>] = []
-    let urlBase = "http://10.110.135.154:5000/"
+    let urlBase = "http://10.110.159.186:5000/"
     
     @IBOutlet weak var recievedMessageText: UILabel!
     var nextMessageText: String = "";
     
     private var timer: DispatchSourceTimer?
 
+    // Start the 10 second time for the next data send task and clear out all caches
     func startTimer() {
         let queue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".timer")
         timer = DispatchSource.makeTimerSource(queue: queue)
@@ -49,19 +50,22 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         timer!.resume()
     }
     
+    // Clear out all caches
     func resetCaches() {
-        totVoltageCache = [["value": "10"]]
+        totVoltageCache = []
         voltageOneCache = []
         voltageTwoCache = []
         currentCache = []
         temperatureCache = []
     }
 
+    // Stop the timer (stop sending data)
     func stopTimer() {
         timer?.cancel()
         timer = nil
     }
     
+    // Send the cache data to the backend
     func sendData() {
         let config = URLSessionConfiguration.default
 
@@ -71,50 +75,45 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         var urlRequest = URLRequest(url: url!)
         urlRequest.httpMethod = "POST"
 
-        // your post request data
         let postDict : [String: Any] = ["totalVoltage": totVoltageCache,
                                         "voltageOne": voltageOneCache,
                                         "votlageTwo": voltageTwoCache,
                                         "current": currentCache,
                                         "temperature": temperatureCache]
 
-        print(postDict)
+        print("Sending Data to the Backend...")
         guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
             return
         }
         urlRequest.httpBody = postData
 
         let task = session.dataTask(with: urlRequest) { data, response, error in
-          print("here")
         }
 
         task.resume()
-        print(totVoltageCache)
-        print(voltageOneCache)
-        print(voltageTwoCache)
-        print(currentCache)
-        print(temperatureCache)
     }
     
+    // Cache and sort the raw data from the BLE device and add the current timestamp
     func cacheData(dataString: String) throws {
         let splitString = dataString.split(separator: ":")
         let type = splitString[0]
         let data = splitString[1]
+        let timestamp = NSDate().timeIntervalSince1970
         switch type {
         case battery1ID:
-            voltageOneCache.append(["value": String(data)]);
+            voltageOneCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         case battery2ID:
-            voltageTwoCache.append(["value": String(data)]);
+            voltageTwoCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         case totalVoltageID:
-            totVoltageCache.append(["value": String(data)]);
+            totVoltageCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         case currentID:
-            currentCache.append(["value": String(data)]);
+            currentCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         case temperatureID:
-            temperatureCache.append(["value": String(data)]);
+            temperatureCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         default:
             throw NSError();
