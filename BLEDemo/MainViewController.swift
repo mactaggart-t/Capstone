@@ -121,7 +121,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         }
     }
 
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,6 +130,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         customiseNavigationBar()
         
     }
+
     
     func customiseNavigationBar () {
         
