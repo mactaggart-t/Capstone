@@ -28,6 +28,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     var currentCache: [Dictionary<String, String>] = []
     var temperatureCache: [Dictionary<String, String>] = []
     let urlBase = "http://10.110.159.186:5000/"
+    var sessionID = ""
     
     @IBOutlet weak var recievedMessageText: UILabel!
     var nextMessageText: String = "";
@@ -79,7 +80,8 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
                                         "voltageOne": voltageOneCache,
                                         "votlageTwo": voltageTwoCache,
                                         "current": currentCache,
-                                        "temperature": temperatureCache]
+                                        "temperature": temperatureCache,
+                                        "sessionID": sessionID]
 
         print("Sending Data to the Backend...")
         guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
@@ -88,6 +90,9 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         urlRequest.httpBody = postData
 
         let task = session.dataTask(with: urlRequest) { data, response, error in
+            guard let data = data else { return }
+            let trimmedString = String(data: data, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
+            self.sessionID = trimmedString
         }
 
         task.resume()
@@ -120,7 +125,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         }
     }
 
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,6 +134,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         customiseNavigationBar()
         
     }
+
     
     func customiseNavigationBar () {
         
