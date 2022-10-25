@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 import pymysql
+import json
 
-# Establish connection with the database
+
 conn = pymysql.connect(
         host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
         port = 3306,
@@ -12,120 +13,124 @@ conn = pymysql.connect(
         )
 
 # insert query into users table
-def insert_users(users_id, email, pwd, join_date, max_capacity, firstname, lastname):
+def insert_users(email, pwd, join_date, max_capacity, firstname, lastname):
     cur=conn.cursor()
-    cur.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)", (users_id, email, pwd, join_date, max_capacity, firstname, lastname))
+    cur.execute("INSERT INTO users (email, pwd, join_date, max_capacity, firstname, lastname) VALUES (%s, %s, %s, %s, %s, %s)", (email, pwd, join_date, max_capacity, firstname, lastname))
     conn.commit()
 
-# read the data in users table
+# read the data from users table
 def get_users():
     cur=conn.cursor()
     cur.execute("SELECT * FROM users")
     users = cur.fetchall()
     return users
 
-# delete row from users table based on id
-def delete_from_users(id):
+# delete row from users table based on email
+def delete_from_users(email):
     cur = conn.cursor()
-    cur.execute("DELETE FROM users WHERE users_id=%s", (id))
-    conn.commit()
-
-##--- HANDLING CURRENT / TEMPERATURE / VOLTAGE DATA ---##
-# insert data into a specified table
-def insert_data(table, session_id, time, value, users_id):
-    cur=conn.cursor()
-    cur.execute("INSERT INTO " + table + " VALUES (%s, %s, %s, %s)", (session_id, time, value, users_id))
+    cur.execute("DELETE FROM users WHERE email=%s", (email))
     conn.commit()
     
-# read the data in a table
+### Current/Temperature/Voltage ###
+# insert query into a table
+def insert_data(table, time, data, user_id):
+    cur=conn.cursor()
+    cur.execute("INSERT INTO " + table + " (time, " + table + ", user_id) VALUES (%s, %s, %s)", (time, data, user_id))
+    conn.commit()
+
+# read the data from a table
 def get_data(table):
     cur=conn.cursor()
     cur.execute("SELECT * FROM " + table)
     data = cur.fetchall()
     return data
-    
-# delete row from a data table based on session id
-def delete_from_data(table, session_id):
+
+# delete row from a table based on user id
+def delete_data(table, user_id):
     cur = conn.cursor()
-    cur.execute("DELETE FROM " + table + " WHERE session_id=%s", (session_id))
+    cur.execute("DELETE FROM " + table + " WHERE user_id=%s", (user_id))
     conn.commit()
 
-##--- TESTING ---##
-print("###### TEST RESULTS ######")
-
-## USERS ##
+### TESTING ###
 # inserts data into users
-insert_users('5', 'johndoe@capstone.com', 'fall', '2985-9-1', '1000', 'John', 'Doe')
-# prints all of users table
-print("After adding a new user...")
+print("Insert User Data into Table")
+insert_users('johndoe@capstone.com', 'fall', '2985-9-1', '1000', 'John', 'Doe')
 print(get_users())
-# delete a row
-delete_from_users('5')
-print("After deleting a user...")
+# delete a row from users
+print("Delete User Data from Table")
+delete_from_users('johndoe@capstone.com')
 print(get_users())
 
-### CURRENT ##
-## inserts data into current table
-insert_data('current', '1', '10', '20', '6')
-## prints current table
-print("After inserting into current...")
+# inserts data into current
+print("Insert Current Data into Table")
+insert_data('current', '10', '80', '7')
 print(get_data('current'))
-## delete the row
-delete_from_data('current', '1')
-print("After deleting from current...")
+# delete a row froms current
+print("Delete Current Data from Table")
+delete_data('current', '7')
 print(get_data('current'))
 
-## TEMPERATURE ##
-# inserts data into temperature table
-insert_data('temperature', '2', '50', '100', '7')
-# prints temperature table
-print("After inserting into temperature...")
+
+## inserts data into temperature
+print("Insert Temperature Data into Table")
+insert_data('temperature', '120', '20', '6')
 print(get_data('temperature'))
-# delete the row
-delete_from_data('temperature', '2')
-print("After deleting from temperature...")
+# delete a row froms temperature
+print("Delete Temperature Data from Table")
+delete_data('temperature', '6')
 print(get_data('temperature'))
 
-## VOLTAGE ##
-# inserts data into voltage table
-insert_data('voltage', '100', '200', '70', '7')
-# prints voltage table
-print("After inserting into voltage...")
+# inserts data into voltage
+print("Insert Voltage Data into Table")
+insert_data('voltage', '5', '12', '7')
 print(get_data('voltage'))
-# delete the row
-delete_from_data('voltage', '100')
-print("After deleting from voltage...")
+# delete a row froms voltage
+print("Delete Voltage Data from Table")
+delete_data('voltage', '7')
 print(get_data('voltage'))
 
-#app = Flask(__name__)
-#api = Api(app)
-#
-#parser = reqparse.RequestParser()
-#
-#
-#class Voltage(Resource):
-#    def post(self):
-#        args = parser.parse_args()
-#        return 200
-#
-#
-#class Current(Resource):
-#    def post(self):
-#        args = parser.parse_args()
-#        return 200
-#
-#
-#class Temperature(Resource):
-#    def post(self):
-#        args = parser.parse_args()
-#        return 200
-#
-#
-#api.add_resource(Voltage, '/voltage')
-#api.add_resource(Current, '/current')
-#api.add_resource(Temperature, '/temperature')
-#
-#if __name__ == '__main__':
-#    app.run(debug=True)
-#
-#
+app = Flask(__name__)
+api = Api(app)
+
+parser = reqparse.RequestParser()
+
+
+class Voltage(Resource):
+    def post(self):
+        args = parser.parse_args()
+        return 200
+
+
+class Current(Resource):
+    def post(self):
+        args = parser.parse_args()
+        return 200
+
+
+class Temperature(Resource):
+    def post(self):
+        args = parser.parse_args()
+        return 200
+
+
+
+class LoadRawData(Resource):
+    def post(self):
+        data = request.form.to_dict()
+        flipped_data = dict([(value, key) for key, value in data.items()])
+        data_string = flipped_data.get('')
+        data_dict = json.loads(data_string)
+        total_voltage = data_dict.get('totalVoltage')
+        temperature = data_dict.get('temperature')
+        voltage_one = data_dict.get('voltageOne')
+        voltage_two = data_dict.get('voltageTwo')
+        current = data_dict.get('current')
+        
+
+api.add_resource(Voltage, '/voltage')
+api.add_resource(Current, '/current')
+api.add_resource(Temperature, '/temperature')
+api.add_resource(LoadRawData, '/loadRawData')
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5001)
