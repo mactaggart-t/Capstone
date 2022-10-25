@@ -17,12 +17,108 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     
     let BLEService = "DFB0"
     let BLECharacteristic = "DFB1"
+    let battery1ID = "Battery1 Voltage"
+    let battery2ID = "Battery 2 Voltage"
+    let totalVoltageID = "Total Voltage"
+    let currentID = "Current"
+    let temperatureID = "Temperature(C)"
+    var totVoltageCache: [Dictionary<String, String>] = []
+    var voltageOneCache: [Dictionary<String, String>] = []
+    var voltageTwoCache: [Dictionary<String, String>] = []
+    var currentCache: [Dictionary<String, String>] = []
+    var temperatureCache: [Dictionary<String, String>] = []
+    let urlBase = "http://10.110.135.154:5000/"
     
     @IBOutlet weak var recievedMessageText: UILabel!
     var nextMessageText: String = "";
     
-    func getVoltageFromBackend() {
-        
+    private var timer: DispatchSourceTimer?
+
+    func startTimer() {
+        let queue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".timer")
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        timer!.schedule(deadline: .now(), repeating: .seconds(10))
+        timer!.setEventHandler { [weak self] in
+
+            self?.sendData()
+
+            DispatchQueue.main.async {
+                self?.resetCaches();
+            }
+        }
+        timer!.resume()
+    }
+    
+    func resetCaches() {
+        totVoltageCache = [["value": "10"]]
+        voltageOneCache = []
+        voltageTwoCache = []
+        currentCache = []
+        temperatureCache = []
+    }
+
+    func stopTimer() {
+        timer?.cancel()
+        timer = nil
+    }
+    
+    func sendData() {
+        let config = URLSessionConfiguration.default
+
+        let session = URLSession(configuration: config)
+
+        let url = URL(string: urlBase + "loadRawData")
+        var urlRequest = URLRequest(url: url!)
+        urlRequest.httpMethod = "POST"
+
+        // your post request data
+        let postDict : [String: Any] = ["totalVoltage": totVoltageCache,
+                                        "voltageOne": voltageOneCache,
+                                        "votlageTwo": voltageTwoCache,
+                                        "current": currentCache,
+                                        "temperature": temperatureCache]
+
+        print(postDict)
+        guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
+            return
+        }
+        urlRequest.httpBody = postData
+
+        let task = session.dataTask(with: urlRequest) { data, response, error in
+          print("here")
+        }
+
+        task.resume()
+        print(totVoltageCache)
+        print(voltageOneCache)
+        print(voltageTwoCache)
+        print(currentCache)
+        print(temperatureCache)
+    }
+    
+    func cacheData(dataString: String) throws {
+        let splitString = dataString.split(separator: ":")
+        let type = splitString[0]
+        let data = splitString[1]
+        switch type {
+        case battery1ID:
+            voltageOneCache.append(["value": String(data)]);
+            break;
+        case battery2ID:
+            voltageTwoCache.append(["value": String(data)]);
+            break;
+        case totalVoltageID:
+            totVoltageCache.append(["value": String(data)]);
+            break;
+        case currentID:
+            currentCache.append(["value": String(data)]);
+            break;
+        case temperatureID:
+            temperatureCache.append(["value": String(data)]);
+            break;
+        default:
+            throw NSError();
+        }
     }
 
     
@@ -97,6 +193,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         mainPeripheral = nil
         customiseNavigationBar()
+        stopTimer()
         print("Disconnected" + peripheral.name!)
     }
     
@@ -174,6 +271,7 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
                     //Set Notify is useful to read incoming data async
                     peripheral.setNotifyValue(true, for: characteristic)
                     print("Found Bluno Data Characteristic")
+                    startTimer()
                 }
                 
             }
@@ -210,6 +308,13 @@ class MainViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
                         var tempStr = nextMessageText
                         tempStr.removeLast(3)
                         recievedMessageText.text = tempStr;
+                        do {
+                            try cacheData(dataString: tempStr);
+                        }
+                        catch _ as NSError {
+                            print("Error: Could Not Cache Data");
+                        }
+                        
                     }
                 }
             }
