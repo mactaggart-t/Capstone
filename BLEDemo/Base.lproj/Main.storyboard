@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="mlZ-mY-2OR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="mlZ-mY-2OR">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,48 +15,16 @@
                         <viewControllerLayoutGuide type="top" id="dMi-f7-hVa"/>
                         <viewControllerLayoutGuide type="bottom" id="bQj-Tb-Mkf"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="BcI-Uw-D2L" customClass="HomeVC">
+                    <view key="view" contentMode="scaleToFill" id="BcI-Uw-D2L">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Recieved" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOR-2c-7DW">
-                                <rect key="frame" x="123.66666666666669" y="214" width="143" height="20.666666666666657"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pEs-yP-WO1">
-                                <rect key="frame" x="126.66666666666669" y="143" width="137" height="30"/>
-                                <state key="normal" title="Send &quot;Hello World!&quot;"/>
-                                <connections>
-                                    <action selector="sendButtonPressed:" destination="9Pu-vz-22V" eventType="touchUpInside" id="ftO-bj-Pb4"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzW-4l-oYQ">
-                                <rect key="frame" x="188" y="412" width="14" height="20"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="pEs-yP-WO1" firstAttribute="top" secondItem="dMi-f7-hVa" secondAttribute="bottom" constant="52" id="4ae-g1-5J0"/>
-                            <constraint firstItem="dOR-2c-7DW" firstAttribute="centerX" secondItem="BcI-Uw-D2L" secondAttribute="centerX" id="8GP-gv-RDL"/>
-                            <constraint firstItem="pEs-yP-WO1" firstAttribute="centerX" secondItem="BcI-Uw-D2L" secondAttribute="centerX" id="Iq4-Lk-wPJ"/>
-                            <constraint firstItem="dOR-2c-7DW" firstAttribute="centerX" secondItem="BcI-Uw-D2L" secondAttribute="centerX" id="cIY-y1-cUS"/>
-                            <constraint firstItem="pEs-yP-WO1" firstAttribute="centerX" secondItem="BcI-Uw-D2L" secondAttribute="centerX" id="cqW-iL-ktq"/>
-                            <constraint firstItem="RzW-4l-oYQ" firstAttribute="centerX" secondItem="BcI-Uw-D2L" secondAttribute="centerX" id="gih-QN-h4G"/>
-                            <constraint firstItem="dOR-2c-7DW" firstAttribute="top" secondItem="dMi-f7-hVa" secondAttribute="bottom" constant="123" id="lZ5-A2-AKN"/>
-                            <constraint firstItem="RzW-4l-oYQ" firstAttribute="centerY" secondItem="BcI-Uw-D2L" secondAttribute="centerY" id="xHD-v5-NkA"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="nZF-Ib-iXE">
                         <color key="badgeColor" red="0.5450980392" green="0.30196078430000001" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="jgs-uw-3QO"/>
                     <connections>
-                        <outlet property="recievedMessageText" destination="RzW-4l-oYQ" id="d43-6r-CIj"/>
                         <segue destination="XZM-Me-sXn" kind="show" identifier="scan-segue" id="gj8-TH-9Lz"/>
                     </connections>
                 </viewController>
@@ -90,7 +57,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="scanTableCell" id="5Jg-uN-fb0">
-                                <rect key="frame" x="0.0" y="94" width="390" height="44"/>
+                                <rect key="frame" x="0.0" y="88.666666030883789" width="390" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Jg-uN-fb0" id="EqY-XR-75o">
                                     <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
@@ -138,7 +105,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="26e-hL-6dZ">
             <objects>
-                <tabBarController storyboardIdentifier="TabBar" id="vzf-07-myt" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBar" id="vzf-07-myt" customClass="TabBarController" customModule="BLEDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="K7y-7O-jQU"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RUM-BW-BiR">
@@ -169,7 +136,7 @@
             <objects>
                 <navigationController id="mlZ-mY-2OR" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fni-to-M7J">
-                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <navigationBarAppearance key="standardAppearance"/>
                     </navigationBar>
@@ -380,13 +347,13 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Iyw-d6-LfT"/>
-        <segue reference="gj8-TH-9Lz"/>
+        <segue reference="F3s-dZ-pCT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="battery.100" catalog="system" width="128" height="59"/>
-        <image name="house" catalog="system" width="128" height="104"/>
-        <image name="link" catalog="system" width="128" height="124"/>
-        <image name="person.circle" catalog="system" width="128" height="123"/>
+        <image name="house" catalog="system" width="128" height="106"/>
+        <image name="link" catalog="system" width="128" height="122"/>
+        <image name="person.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
