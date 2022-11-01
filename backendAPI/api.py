@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 import pymysql
 import json
-from database_interactions import create_new_session, add_raw_data_to, get_current_temp, get_max_ride_temp, get_min_ride_temp
+from database_interactions import *
 
 
 app = Flask(__name__)
