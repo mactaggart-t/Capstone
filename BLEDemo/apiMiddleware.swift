@@ -32,7 +32,7 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
                                     "temperature": temperatureCache,
                                     "sessionID": sessionID]
 
-    print("Sending Data to the Backend...")
+    print("Sending data to the backend...")
     guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
         return
     }
@@ -62,6 +62,7 @@ func getTemperatureData() {
     request.httpMethod = "GET"
     request.setValue(sessionID, forHTTPHeaderField: "SessionID")
     // Send HTTP Request
+    print("Getting temperature from the backend...")
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         // Convert HTTP Response Data to a simple String
         if let data = data, let dataString = String(data: data, encoding: .utf8) {
