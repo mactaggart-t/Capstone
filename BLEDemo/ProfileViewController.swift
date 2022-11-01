@@ -17,7 +17,8 @@ class ProfileViewController: UIViewController {
         
         proPicView.layer.masksToBounds = true
         proPicView.layer.cornerRadius = proPicView.frame.height / 4
-
+        
+        
     }
         /*
          // MARK: - Navigation
