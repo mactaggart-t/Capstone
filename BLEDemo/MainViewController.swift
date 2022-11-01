@@ -122,10 +122,33 @@ class MainViewController: UIViewController {
 //    }
 
 
+    @IBOutlet weak var chartBorder: UIImageView!
+    
+    @IBOutlet weak var currentBox: UIImageView!
+    
+    @IBOutlet weak var voltageBox: UIImageView!
+    
+    @IBOutlet weak var tempBox2: UIImageView!
+    
+    @IBOutlet weak var tempBox1: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        chartBorder.layer.masksToBounds = true
+        chartBorder.layer.cornerRadius = chartBorder.frame.height / 8
+        
+        currentBox.layer.cornerRadius = currentBox.frame.height / 8
 
+        voltageBox.layer.cornerRadius = voltageBox.frame.height / 8
+        
+        tempBox1.layer.cornerRadius = tempBox1.frame.height / 8
+        
+        tempBox2.layer.cornerRadius = tempBox2.frame.height / 8
+        
+        
     }
+    
+    
 
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //
