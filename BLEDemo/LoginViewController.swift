@@ -17,10 +17,13 @@ class LoginViewController: UIViewController {
     //@IBOutlet weak var passwordTextField: UITextField!
     //@IBOutlet weak var signInButton: UIButton!
 
+    @IBOutlet weak var loginBorder: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginBorder.layer.masksToBounds = true
+        loginBorder.layer.cornerRadius = loginBorder.frame.height / 8
     }
     
     

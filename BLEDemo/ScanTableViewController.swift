@@ -13,10 +13,11 @@ class ScanTableViewController: UITableViewController, CBCentralManagerDelegate {
     
     var peripherals:[CBPeripheral] = []
     var manager:CBCentralManager? = nil
-    var parentView:MainViewController? = nil
+    var parentView:TabBarController? = nil
     
     override func viewDidLoad() {
-        super.viewDidLoad()    
+        super.viewDidLoad()
+        print("here")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -94,7 +95,6 @@ class ScanTableViewController: UITableViewController, CBCentralManagerDelegate {
         
         //set the manager's delegate view to parent so it can call relevant disconnect methods
         manager?.delegate = parentView
-        parentView?.customiseNavigationBar()
         
         if let navController = self.navigationController {
             navController.popViewController(animated: true)
