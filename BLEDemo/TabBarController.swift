@@ -144,7 +144,7 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.hidesBackButton = true
         manager = CBCentralManager(delegate: self, queue: nil);
         print(self.selectedIndex)
     }
