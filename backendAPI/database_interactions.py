@@ -58,6 +58,30 @@ def delete_battery(battery_id):
     cur.execute("DELETE FROM battery WHERE battery_id=%s", (battery_id))
     cur.commit()
     
+### SESSION TABLE ###
+# insert session information into data_session table, get current time and date of the start of the session
+def insert_session(battery_id, cur_capacity):
+    cur=conn.cursor()
+    now = datetime.datetime.now()
+    cur.execute("INSERT INTO data_session (battery_id, session_start, cur_capacity)", (battery_id, now, cur_capacity))
+    cur.commit()
+    
+# see sessions in the data_session table, either all of them or ones for a specific battery
+def get_sessions(battery_id=None):
+    cur=conn.cursor()
+    if battery_id is None:
+        cur.execute("SELECT * FROM data_session")
+    else:
+        cur.execute("SELECT * FROM data_session WHERE battery_id=%s", (battery_id))
+    sessions = cur.fetchall()
+    return sessions
+    
+# delete row from data_session table based on session id
+def delete_session(session_id):
+    cur=conn.cursor()
+    cur.execute("DELETE FROM data_session WHERE session_id=%s", (session_id))
+    cur.commit()
+    
 ### Current/Temperature/Voltage ###
 # insert query into a table
 def insert_data(table, time, data, user_id):
