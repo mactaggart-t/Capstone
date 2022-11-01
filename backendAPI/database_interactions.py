@@ -38,20 +38,47 @@ def delete_from_users(email):
     cur = conn.cursor()
     cur.execute("DELETE FROM users WHERE email=%s", (email))
     conn.commit()
-    
-### Current/Temperature/Voltage ###
-# insert query into a table
-def insert_data(table, time, data, user_id):
-    cur=conn.cursor()
-    cur.execute("INSERT INTO " + table + " (time, " + table + ", user_id) VALUES (%s, %s, %s)", (time, data, user_id))
-    conn.commit()
+
+### Current/Voltage ###
+# insert query into voltage/current table
+def insert_cur_vol(table, time, data, session_id):
+   cur=conn.cursor()
+   cur.execute("INSERT INTO " + table + " (session_id, time, data) VALUES (%s, %s, %s)", (session_id, time, data))
+   conn.commit()
+
+### Temperature ###
+# insert query into temperature table
+def insert_temp(time, temp1, temp2, session_id):
+   cur=conn.cursor()
+   cur.execute("INSERT INTO temperature (session_id, time, temp1, temp2) VALUES (%s, %s, %s, %s)", (session_id, time, temp1, temp2))
+   conn.commit()
 
 # read the data from a table
-def get_data(table):
+def get_table_data(table):
     cur=conn.cursor()
     cur.execute("SELECT * FROM " + table)
     data = cur.fetchall()
     return data
+
+# read user data from current/voltage table
+def get_user_data(table, session_id, num = -1):
+   cur=conn.cursor()
+   cur.execute("SELECT session_id, time, value FROM " + table + " WHERE session_id=%s order by time desc", (session_id))
+   if (num > -1):
+      data = cur.fetchall()
+   else:
+      data = cur.fetchmany(size = num)
+   return data
+
+# read user data from temperature table
+def get_user_temp_data(session_id, num = -1):
+   cur=conn.cursor()
+   cur.execute("SELECT session_id, time, temp1, temp2 FROM temperature WHERE session_id=%s order by time desc", (session_id))
+   if (num > -1):
+      data = cur.fetchall()
+   else:
+      data = cur.fetchmany(size = num)
+   return data
 
 # delete row from a table based on user id
 def delete_data(table, user_id):
