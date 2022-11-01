@@ -19,25 +19,44 @@ def insert_user(email, pwd, firstname=None, lastname=None):
     cur.execute("INSERT INTO users (email, pwd, join_date, firstname, lastname) VALUES (%s, %s, %s, %s, %s, %s)", (email, pwd, now, firstname, lastname))
     conn.commit()
 
-# see all users in the user table
-def get_all_users():
+# see all users in the user table or a specific user based on their email
+def get_user(email=None):
     cur=conn.cursor()
-    cur.execute("SELECT * FROM users")
-    users = cur.fetchall()
-    return users
-    
-# see information for a specific user, based on their email
-def get_user(email):
-    cur=conn.cursor()
-    cur.execute("SELECT * FROM users WHERE email=%s", (email))
+    if email is None:
+        cur.execute("SELECT * FROM users")
+    else:
+        cur.execute("SELECT * FROM users WHERE email=%s", (email))
     user = cur.fetchall()
     return user
 
 # delete row from users table based on email
-def delete_from_users(email):
+def delete_user(email):
     cur = conn.cursor()
     cur.execute("DELETE FROM users WHERE email=%s", (email))
     conn.commit()
+    
+### BATTERY TABLE ###
+# insert battery data into battery table
+def insert_battery(user_id, max_capacity):
+    cur=conn.cursor()
+    cur.execute("INSERT INTO battery (user_id, max_capacity) VALUES (%s, %s)", (user_id, max_capacity))
+    conn.commit()
+    
+# see batteries in the battery table, either all of them or a specific user's
+def get_batteries(user_id=None):
+    cur=conn.cursor()
+    if user_id is None:
+        cur.execute("SELECT * FROM battery")
+    else:
+        cur.execute("SELECT * FROM battery WHERE user_id=%s", (user_id))
+    batteries = cur.fetchall()
+    return batteries
+    
+# delete row from battery table based on battery id
+def delete_battery(battery_id):
+    cur=conn.cursor()
+    cur.execute("DELETE FROM battery WHERE battery_id=%s", (battery_id))
+    cur.commit()
     
 ### Current/Temperature/Voltage ###
 # insert query into a table
