@@ -27,8 +27,8 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
     var voltageTwoCache: [Dictionary<String, String>] = []
     var currentCache: [Dictionary<String, String>] = []
     var temperatureCache: [Dictionary<String, String>] = []
-    let urlBase = "http://10.110.159.186:5000/"
-    var sessionID = ""
+    var nextMessageText: String = "";
+    private var timer: DispatchSourceTimer?
     
     override var selectedViewController: UIViewController? {
         didSet {
@@ -46,10 +46,6 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
             scanController.parentView = self
         }
     }
-    
-    var nextMessageText: String = "";
-    
-    private var timer: DispatchSourceTimer?
 
     // Start the 10 second time for the next data send task and clear out all caches
     func startTimer() {
@@ -84,34 +80,11 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
     
     // Send the cache data to the backend
     func sendData() {
-        let config = URLSessionConfiguration.default
-
-        let session = URLSession(configuration: config)
-
-        let url = URL(string: urlBase + "loadRawData")
-        var urlRequest = URLRequest(url: url!)
-        urlRequest.httpMethod = "POST"
-
-        let postDict : [String: Any] = ["totalVoltage": totVoltageCache,
-                                        "voltageOne": voltageOneCache,
-                                        "votlageTwo": voltageTwoCache,
-                                        "current": currentCache,
-                                        "temperature": temperatureCache,
-                                        "sessionID": sessionID]
-
-        print("Sending Data to the Backend...")
-        guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
-            return
-        }
-        urlRequest.httpBody = postData
-
-        let task = session.dataTask(with: urlRequest) { data, response, error in
-            guard let data = data else { return }
-            let trimmedString = String(data: data, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
-            self.sessionID = trimmedString
-        }
-
-        task.resume()
+        BLEDemo.sendData(totVoltageCache: totVoltageCache,
+                                     voltageOneCache: voltageOneCache,
+                                     voltageTwoCache: voltageTwoCache,
+                                     currentCache: currentCache,
+                                     temperatureCache: temperatureCache)
     }
     
     // Cache and sort the raw data from the BLE device and add the current timestamp
@@ -146,37 +119,11 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         manager = CBCentralManager(delegate: self, queue: nil);
-        print(self.selectedIndex)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print(segue)
-        
-        if (segue.identifier == "scan-segue") {
-            let scanController : ScanTableViewController = segue.destination as! ScanTableViewController
-            
-            //set the manager's delegate to the scan view so it can call relevant connection methods
-            manager?.delegate = scanController
-            scanController.manager = manager
-            scanController.parentView = self
-        }
-        
     }
     
     @objc func disconnectButtonPressed() {
         //this will call didDisconnectPeripheral, but if any other apps are using the device it will not immediately disconnect
         manager?.cancelPeripheralConnection(mainPeripheral!)
-    }
-    
-    @IBAction func sendButtonPressed(_ sender: AnyObject) {
-        let helloWorld = "Hello World!"
-        let dataToSend = helloWorld.data(using: String.Encoding.utf8)
-        
-        if (mainPeripheral != nil) {
-            mainPeripheral?.writeValue(dataToSend!, for: mainCharacteristic!, type: CBCharacteristicWriteType.withoutResponse)
-        } else {
-            print("haven't discovered device yet")
-        }
     }
     
     // MARK: - CBCentralManagerDelegate Methods

@@ -17,7 +17,6 @@ class ScanTableViewController: UITableViewController, CBCentralManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("here")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,9 +95,10 @@ class ScanTableViewController: UITableViewController, CBCentralManagerDelegate {
         //set the manager's delegate view to parent so it can call relevant disconnect methods
         manager?.delegate = parentView
         
-        if let navController = self.navigationController {
-            navController.popViewController(animated: true)
-        }
+        // TODO: redirect user to home tab / make disconnect buttom appear
+//        if let navController = self.navigationController {
+//            navController.popViewController(animated: true)
+//        }
         
         print("Connected to " +  peripheral.name!)
     }
