@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3590952828ECC79B00E8A604 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3590952728ECC79A00E8A604 /* LoginViewController.swift */; };
 		35E3E2BA29088C7100AF7D1A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E3E2B929088C7100AF7D1A /* TabBarController.swift */; };
+		35E3E2BC2911B87400AF7D1A /* apiMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E3E2BB2911B87400AF7D1A /* apiMiddleware.swift */; };
 		785098841D365ADD00976091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785098831D365ADD00976091 /* AppDelegate.swift */; };
 		785098861D365ADD00976091 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785098851D365ADD00976091 /* MainViewController.swift */; };
 		785098891D365ADD00976091 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 785098871D365ADD00976091 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		3590952728ECC79A00E8A604 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		35E3E2B929088C7100AF7D1A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		35E3E2BB2911B87400AF7D1A /* apiMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiMiddleware.swift; sourceTree = "<group>"; };
 		785098801D365ADD00976091 /* BLEDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		785098831D365ADD00976091 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		785098851D365ADD00976091 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				7850988F1D365ADD00976091 /* Info.plist */,
 				3590952728ECC79A00E8A604 /* LoginViewController.swift */,
 				35E3E2B929088C7100AF7D1A /* TabBarController.swift */,
+				35E3E2BB2911B87400AF7D1A /* apiMiddleware.swift */,
 			);
 			path = BLEDemo;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				785098841D365ADD00976091 /* AppDelegate.swift in Sources */,
 				35E3E2BA29088C7100AF7D1A /* TabBarController.swift in Sources */,
 				785098961D365E8E00976091 /* ScanTableViewController.swift in Sources */,
+				35E3E2BC2911B87400AF7D1A /* apiMiddleware.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
