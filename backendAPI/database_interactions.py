@@ -32,6 +32,8 @@ def get_user(email=None):
 # delete row from users table based on email
 def delete_user(email):
     cur = conn.cursor()
+    #TODO delete_battery()
+    #TODO delete all session data and session
     cur.execute("DELETE FROM users WHERE email=%s", (email))
     conn.commit()
 
@@ -97,11 +99,18 @@ def delete_session(session_id):
     cur.commit()
     
 ### Current/Temperature/Voltage ###
-# insert query into a table
-def insert_data(table, time, data, user_id):
+# insert query into a Current/Voltage table
+def insert_data(table, time, value, session_id):
+    if table == 'temperature':
+      insert_temp_data(time, value, session_id)
     cur=conn.cursor()
-    cur.execute("INSERT INTO " + table + " (time, " + table + ", user_id) VALUES (%s, %s, %s)", (time, data, user_id))
+    cur.execute("INSERT INTO " + table + " (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, value))
     conn.commit()
+
+# insert query into a Temperature table
+def insert_temp_data(time, value, session_id):
+    cur = conn.cursor()
+    cur.execute("INSERT INTO temperature (session_id, time, temp1, temp2) VALUES (%s, %s, %s, %s)", (session_id, time, value[0], value[1]))
 
 # read the data from a table
 def get_table_data(table):
@@ -112,6 +121,8 @@ def get_table_data(table):
 
 # read user data from current/voltage table
 def get_user_data(table, session_id, num = -1):
+   if table == 'temperature':
+      return get_user_temp_data(session_id, num)
    cur=conn.cursor()
    cur.execute("SELECT session_id, time, value FROM " + table + " WHERE session_id=%s order by time desc", (session_id))
    if (num > -1):
@@ -131,14 +142,18 @@ def get_user_temp_data(session_id, num = -1):
    return data
 
 # delete row from a table based on user id
-def delete_data(table, user_id):
+#TODO needs to be fixed
+def delete_data(table, session_id):
     cur = conn.cursor()
-    cur.execute("DELETE FROM " + table + " WHERE user_id=%s", (user_id))
+    cur.execute("DELETE FROM " + table + " WHERE session_id=%s", (session_id))
     conn.commit()
     
 # create a new session in the database
-def create_new_session():
-    return 1
+def create_new_session(battery_id, cur_capacity):
+    cur=conn.cursor()
+    now = datetime.datetime.now()
+    cur.execute("INSERT INTO data_session (battery_id, session_start, cur_capacity) VALUES (%s, %s, %s)", (battery_id, now, cur_capacity))
+    conn.commit()
     
 # create new entries for the given values for the given session_id
 def add_raw_data_to(session_id, total_voltage, temperature, voltage_one,
@@ -151,8 +166,22 @@ def get_current_temp(session_id):
     
 # get the peak temperature recorded during the given session_id
 def get_max_ride_temp(session_id):
-    return 185.2
+   cur=conn.cursor()
+   cur.execute("SELECT temp1 FROM temperature WHERE session_id=%s order by temp1 desc", (session_id))
+   data = cur.fetchone()
+   cur.execute("SELECT temp2 FROM temperature WHERE session_id=%s order by temp2 desc", (session_id))
+   temp = cur.fetchone()
+   if temp > data:
+      return temp
+   return data
     
 # get the minimum temperature recorded during the given session_id
 def get_min_ride_temp(session_id):
-    return 85.01
+   cur=conn.cursor()
+   cur.execute("SELECT temp1 FROM temperature WHERE session_id=%s order by temp1 asc", (session_id))
+   data = cur.fetchone()
+   cur.execute("SELECT temp2 FROM temperature WHERE session_id=%s order by temp2 asc", (session_id))
+   temp = cur.fetchone()
+   if temp < data:
+      return temp
+   return data
