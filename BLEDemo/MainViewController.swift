@@ -13,30 +13,33 @@ import CoreBluetooth
 class MainViewController: UIViewController {
     private var timer: DispatchSourceTimer?
 
-    @IBOutlet weak var chartBorder: UIImageView!
-    
     @IBOutlet weak var currentBox: UIImageView!
-    
     @IBOutlet weak var voltageBox: UIImageView!
-    
     @IBOutlet weak var tempBox2: UIImageView!
-    
     @IBOutlet weak var tempBox1: UIImageView!
+    @IBOutlet weak var batteryVC: UIView!
+    @IBOutlet weak var temperatureVC: UIView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        chartBorder.layer.masksToBounds = true
-        chartBorder.layer.cornerRadius = chartBorder.frame.height / 8
-        
         currentBox.layer.cornerRadius = currentBox.frame.height / 8
-
         voltageBox.layer.cornerRadius = voltageBox.frame.height / 8
-        
         tempBox1.layer.cornerRadius = tempBox1.frame.height / 8
-        
         tempBox2.layer.cornerRadius = tempBox2.frame.height / 8
+        batteryVC.layer.cornerRadius = 10
         
         startTimer();
+    }
+
+    @IBAction func switchViews (sender: UISegmentedControl){
+        if sender.selectedSegmentIndex == 0{
+            batteryVC.alpha = 1
+            temperatureVC.alpha = 0
+        }else{
+            batteryVC.alpha = 0
+            temperatureVC.alpha = 1
+        }
     }
     
     // Start the 10 second time for the next data send task and clear out all caches
