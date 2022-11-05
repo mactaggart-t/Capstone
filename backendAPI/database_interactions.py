@@ -16,7 +16,14 @@ conn = pymysql.connect(
 def insert_user(email, pwd, firstname=None, lastname=None):
     cur=conn.cursor()
     now = datetime.datetime.now()
-    cur.execute("INSERT INTO users (email, pwd, join_date, firstname, lastname) VALUES (%s, %s, %s, %s, %s, %s)", (email, pwd, now, firstname, lastname))
+    if(firstname!=None and lastname!=None):
+        cur.execute("INSERT INTO users (email, pwd, join_date, firstname, lastname) VALUES (%s, %s, %s, %s, %s)", (email, pwd, now, firstname, lastname))
+    elif(firstname!=None):
+        cur.execute("INSERT INTO users (email, pwd, join_date, firstname) VALUES (%s, %s, %s, %s)", (email, pwd, now, firstname))
+    elif(lastname!=None):
+        cur.execute("INSERT INTO users (email, pwd, join_date, lastname) VALUES (%s, %s, %s, %s)", (email, pwd, now, lastname))
+    else:
+        cur.execute("INSERT INTO users (email, pwd, join_date) VALUES (%s, %s, %s)", (email, pwd, now))
     conn.commit()
 
 # see all users in the user table or a specific user based on their email
@@ -103,6 +110,7 @@ def delete_session(session_id):
 def insert_data(table, time, value, session_id):
     if table == 'temperature':
       insert_temp_data(time, value, session_id)
+      return
     cur=conn.cursor()
     cur.execute("INSERT INTO " + table + " (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, value))
     conn.commit()
@@ -111,6 +119,7 @@ def insert_data(table, time, value, session_id):
 def insert_temp_data(time, value, session_id):
     cur = conn.cursor()
     cur.execute("INSERT INTO temperature (session_id, time, temp1, temp2) VALUES (%s, %s, %s, %s)", (session_id, time, value[0], value[1]))
+    conn.commit()
 
 # read the data from a table
 def get_table_data(table):
@@ -126,9 +135,9 @@ def get_user_data(table, session_id, num = -1):
    cur=conn.cursor()
    cur.execute("SELECT session_id, time, value FROM " + table + " WHERE session_id=%s order by time desc", (session_id))
    if (num > -1):
-      data = cur.fetchall()
-   else:
       data = cur.fetchmany(size = num)
+   else:
+      data = cur.fetchall()
    return data
 
 # read user data from temperature table
@@ -136,9 +145,9 @@ def get_user_temp_data(session_id, num = -1):
    cur=conn.cursor()
    cur.execute("SELECT session_id, time, temp1, temp2 FROM temperature WHERE session_id=%s order by time desc", (session_id))
    if (num > -1):
-      data = cur.fetchall()
-   else:
       data = cur.fetchmany(size = num)
+   else:
+      data = cur.fetchall()
    return data
 
 # delete row from a table based on user id

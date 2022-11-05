@@ -29,41 +29,49 @@ conn = pymysql.connect(
 # def get_user(email=None):
 # def delete_user(email):
 # inserts data into users
-print("Insert User Data into Table")
+print("___________Insert User Data into Table___________")
 insert_user('johndoe@capstone.com', 'johnnyBoy1!')
-print(get_user())
+insert_user('alisonFlayer@capstone.com', 'mindflayer123@', 'Alison')
+insert_user('corporalJackkson@stuff.com', 'password123', None, 'Jackson')
+insert_user('ahaile@goog.eu', '1unkbux#', 'Alicia', 'Haile')
+print(get_user(), end='\n\n')
 # delete a row from users
-print("Delete User Data from Table")
+print("___________Delete User Data from Table___________")
 delete_user('johndoe@capstone.com')
-print(get_user())
+print(get_user(), end='\n\n')
 
 # def insert_data(table, time, value, session_id):
 # def get_user_data(table, session_id, num = -1):
 # def delete_data(table, user_id):
 # inserts data into current
-print("Insert Current Data into Table")
+print("___________Insert Current Data into Table___________")
 insert_data('current', '10', '80', '7')
-print(get_user_data('current', '7'))
+insert_data('current', '12', '54', '7')
+print(get_user_data('current', '7'), end='\n\n')
 # delete a row froms current
-print("Delete Current Data from Table")
+print("___________Delete Current Data from Table___________")
 delete_data('current', '7')
-print(get_user_data('current', '7'))
+print(get_user_data('current', '7'), end='\n\n')
 
-
+# def insert_data(table, time, value, session_id):
+# def insert_temp_data(time, value, session_id):
+# def get_user_data(table, session_id, num = -1):
+# def get_user_temp_data(session_id, num = -1):
+# def delete_data(table, user_id):
 ## inserts data into temperature
-print("Insert Temperature Data into Table")
-insert_data('temperature', '120', '20', '6')
-print(get_user_data('temperature', '6'))
+print("___________Insert Temperature Data into Table___________")
+insert_data('temperature', '120', ['20', '12'], '6')
+print(get_user_data('temperature', '6'), end='\n\n')
 # delete a row froms temperature
-print("Delete Temperature Data from Table")
-delete_data('temperature', '6', '6')
-print(get_user_data('temperature'))
+print("___________Delete Temperature Data from Table___________")
+delete_data('temperature', '6')
+print(get_user_data('temperature', '6'), end='\n\n')
 
 # inserts data into voltage
-print("Insert Voltage Data into Table")
+print("___________Insert Voltage Data into Table___________")
 insert_data('voltage', '5', '12', '7')
-print(get_user_data('voltage', '7'))
+print(get_user_data('voltage', '7'), end='\n\n')
 # delete a row froms voltage
-print("Delete Voltage Data from Table")
+print("___________Delete Voltage Data from Table___________")
 delete_data('voltage', '7')
-print(get_user_data('voltage', '7'))
+print(get_user_data('voltage', '7'), end='\n\n')
