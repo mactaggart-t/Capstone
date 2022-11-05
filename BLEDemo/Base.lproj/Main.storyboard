@@ -66,18 +66,11 @@
                                 <color key="backgroundColor" red="0.5450980392" green="0.30196078430000001" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.5450980392" green="0.30196078430000001" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v98-xZ-XnL">
-                                <rect key="frame" x="25" y="254" width="340" height="216"/>
+                            <containerView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v98-xZ-XnL">
+                                <rect key="frame" x="26" y="253" width="340" height="215"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="cHy-HC-qg4" kind="embed" id="ppU-ly-qjr"/>
-                                </connections>
-                            </containerView>
-                            <containerView opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EKc-8c-oLP">
-                                <rect key="frame" x="25" y="254" width="340" height="216"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="hPG-Ol-7Ja" kind="embed" id="85N-hy-DQc"/>
                                 </connections>
                             </containerView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HEt-ah-NxW">
@@ -91,6 +84,13 @@
                                     <action selector="switchViewsWithSender:" destination="9Pu-vz-22V" eventType="valueChanged" id="YLN-o8-Ya9"/>
                                 </connections>
                             </segmentedControl>
+                            <containerView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EKc-8c-oLP">
+                                <rect key="frame" x="26" y="253" width="340" height="215"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="hPG-Ol-7Ja" kind="embed" id="85N-hy-DQc"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -555,26 +555,35 @@
             </objects>
             <point key="canvasLocation" x="1020" y="1614"/>
         </scene>
-        <!--View Controller-->
+        <!--Battery Chart View Controller-->
         <scene sceneID="3u2-71-Xij">
             <objects>
-                <viewController id="cHy-HC-qg4" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="currentContext" id="cHy-HC-qg4" customClass="BatteryChartViewController" customModule="BLEDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="exU-Z8-ntc"/>
+                        <viewControllerLayoutGuide type="bottom" id="yaO-wX-RsL"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NYc-8u-7gB">
-                        <rect key="frame" x="0.0" y="0.0" width="340" height="216"/>
+                        <rect key="frame" x="0.0" y="0.0" width="340" height="215"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="340" height="215"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k4K-77-WeK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="806" y="-218"/>
         </scene>
-        <!--View Controller-->
+        <!--Temperature View Controller-->
         <scene sceneID="IAU-ZK-Kjp">
             <objects>
-                <viewController id="hPG-Ol-7Ja" sceneMemberID="viewController">
+                <viewController id="hPG-Ol-7Ja" customClass="TemperatureViewController" customModule="BLEDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zYa-0y-GG2"/>
+                        <viewControllerLayoutGuide type="bottom" id="cBM-RH-uo1"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WhH-O3-Kxq">
-                        <rect key="frame" x="0.0" y="0.0" width="340" height="216"/>
+                        <rect key="frame" x="0.0" y="0.0" width="340" height="215"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mS4-P8-vnr">
@@ -585,7 +594,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBlueColor"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qlO-Oh-vyD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -607,8 +616,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemFillColor">
             <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>

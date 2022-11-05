@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		247A60852864C5057FC2742B /* Pods_BLEDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD7348DE49596F7445D39599 /* Pods_BLEDemo.framework */; };
 		3590952828ECC79B00E8A604 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3590952728ECC79A00E8A604 /* LoginViewController.swift */; };
 		35E3E2BA29088C7100AF7D1A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E3E2B929088C7100AF7D1A /* TabBarController.swift */; };
 		35E3E2BC2911B87400AF7D1A /* apiMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E3E2BB2911B87400AF7D1A /* apiMiddleware.swift */; };
@@ -22,7 +23,39 @@
 		CB5A651E29104459001D51D9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A651D29104459001D51D9 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CB722E562916FB4700D3BAF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB722E4F2916FB4700D3BAF8 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A1C1B977ED8804E8AEEC884E7359EE58;
+			remoteInfo = Charts;
+		};
+		CB722E582916FB4700D3BAF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB722E4F2916FB4700D3BAF8 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D875370169B6B1210DAA997DCFB7442;
+			remoteInfo = "Pods-BLEDemo";
+		};
+		CB722E5A2916FB4700D3BAF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB722E4F2916FB4700D3BAF8 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F3E7458F7D38C89A9DE4BBACD3450C88;
+			remoteInfo = SwiftAlgorithms;
+		};
+		CB722E5C2916FB4700D3BAF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB722E4F2916FB4700D3BAF8 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 248EB203AE249596FFC55952F5590D95;
+			remoteInfo = TinyConstraints;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		034300094B0F38BF8B1EAFB7 /* Pods-BLEDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLEDemo.release.xcconfig"; path = "Target Support Files/Pods-BLEDemo/Pods-BLEDemo.release.xcconfig"; sourceTree = "<group>"; };
 		3590952728ECC79A00E8A604 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		35E3E2B929088C7100AF7D1A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		35E3E2BB2911B87400AF7D1A /* apiMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiMiddleware.swift; sourceTree = "<group>"; };
@@ -35,9 +68,12 @@
 		7850988F1D365ADD00976091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		785098951D365E8E00976091 /* ScanTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanTableViewController.swift; sourceTree = "<group>"; };
 		785098981D36607500976091 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		BD7348DE49596F7445D39599 /* Pods_BLEDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BLEDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0D12B72911D1D200C01692 /* BatteryChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryChartViewController.swift; sourceTree = "<group>"; };
 		CB0D12B92911D1E800C01692 /* TemperatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureViewController.swift; sourceTree = "<group>"; };
 		CB5A651D29104459001D51D9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CB722E4F2916FB4700D3BAF8 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		FC4C78437F6BEAD4AC58D9EA /* Pods-BLEDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLEDemo.debug.xcconfig"; path = "Target Support Files/Pods-BLEDemo/Pods-BLEDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				785098991D36607500976091 /* CoreBluetooth.framework in Frameworks */,
+				247A60852864C5057FC2742B /* Pods_BLEDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,9 +92,11 @@
 		785098771D365ADD00976091 = {
 			isa = PBXGroup;
 			children = (
+				CB722E4F2916FB4700D3BAF8 /* Pods.xcodeproj */,
 				785098821D365ADD00976091 /* BLEDemo */,
 				785098811D365ADD00976091 /* Products */,
 				785098971D36607500976091 /* Frameworks */,
+				859930308D35643E3CBDCF9A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,8 +132,29 @@
 			isa = PBXGroup;
 			children = (
 				785098981D36607500976091 /* CoreBluetooth.framework */,
+				BD7348DE49596F7445D39599 /* Pods_BLEDemo.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		859930308D35643E3CBDCF9A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FC4C78437F6BEAD4AC58D9EA /* Pods-BLEDemo.debug.xcconfig */,
+				034300094B0F38BF8B1EAFB7 /* Pods-BLEDemo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CB722E502916FB4700D3BAF8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB722E572916FB4700D3BAF8 /* Charts */,
+				CB722E592916FB4700D3BAF8 /* Pods-BLEDemo */,
+				CB722E5B2916FB4700D3BAF8 /* SwiftAlgorithms */,
+				CB722E5D2916FB4700D3BAF8 /* TinyConstraints */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,9 +164,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 785098921D365ADD00976091 /* Build configuration list for PBXNativeTarget "BLEDemo" */;
 			buildPhases = (
+				B6255CCD03097B9368637E02 /* [CP] Check Pods Manifest.lock */,
 				7850987C1D365ADD00976091 /* Sources */,
 				7850987D1D365ADD00976091 /* Frameworks */,
 				7850987E1D365ADD00976091 /* Resources */,
+				C4603EF891C79195313BDCDA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,7 +191,7 @@
 				TargetAttributes = {
 					7850987F1D365ADD00976091 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = DTT7R7JUAY;
+						DevelopmentTeam = 8N2B49ML39;
 						DevelopmentTeamName = "AnalogFolk Ltd";
 						LastSwiftMigration = 1340;
 						ProvisioningStyle = Automatic;
@@ -148,12 +210,53 @@
 			mainGroup = 785098771D365ADD00976091;
 			productRefGroup = 785098811D365ADD00976091 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CB722E502916FB4700D3BAF8 /* Products */;
+					ProjectRef = CB722E4F2916FB4700D3BAF8 /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				7850987F1D365ADD00976091 /* BLEDemo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CB722E572916FB4700D3BAF8 /* Charts */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = Charts;
+			path = Charts.framework;
+			remoteRef = CB722E562916FB4700D3BAF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB722E592916FB4700D3BAF8 /* Pods-BLEDemo */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = "Pods-BLEDemo";
+			path = Pods_BLEDemo.framework;
+			remoteRef = CB722E582916FB4700D3BAF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB722E5B2916FB4700D3BAF8 /* SwiftAlgorithms */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = SwiftAlgorithms;
+			path = Algorithms.framework;
+			remoteRef = CB722E5A2916FB4700D3BAF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB722E5D2916FB4700D3BAF8 /* TinyConstraints */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = TinyConstraints;
+			path = TinyConstraints.framework;
+			remoteRef = CB722E5C2916FB4700D3BAF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7850987E1D365ADD00976091 /* Resources */ = {
@@ -167,6 +270,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B6255CCD03097B9368637E02 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BLEDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C4603EF891C79195313BDCDA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BLEDemo/Pods-BLEDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftAlgorithms/Algorithms.framework",
+				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Algorithms.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TinyConstraints.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BLEDemo/Pods-BLEDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7850987C1D365ADD00976091 /* Sources */ = {
@@ -257,7 +407,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -312,7 +462,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -324,11 +474,12 @@
 		};
 		785098931D365ADD00976091 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC4C78437F6BEAD4AC58D9EA /* Pods-BLEDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DTT7R7JUAY;
+				DEVELOPMENT_TEAM = 8N2B49ML39;
 				INFOPLIST_FILE = BLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -342,11 +493,12 @@
 		};
 		785098941D365ADD00976091 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 034300094B0F38BF8B1EAFB7 /* Pods-BLEDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DTT7R7JUAY;
+				DEVELOPMENT_TEAM = 8N2B49ML39;
 				INFOPLIST_FILE = BLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

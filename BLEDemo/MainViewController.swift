@@ -28,6 +28,7 @@ class MainViewController: UIViewController {
         tempBox1.layer.cornerRadius = tempBox1.frame.height / 8
         tempBox2.layer.cornerRadius = tempBox2.frame.height / 8
         batteryVC.layer.cornerRadius = 10
+        temperatureVC.layer.cornerRadius = 10
         
         startTimer();
     }
