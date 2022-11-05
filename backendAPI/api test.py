@@ -38,6 +38,9 @@ print(get_user(), end='\n\n')
 # delete a row from users
 print("___________Delete User Data from Table___________")
 delete_user('johndoe@capstone.com')
+delete_user('alisonFlayer@capstone.com')
+delete_user('corporalJackkson@stuff.com')
+delete_user('ahaile@goog.eu')
 print(get_user(), end='\n\n')
 
 # def insert_data(table, time, value, session_id):
