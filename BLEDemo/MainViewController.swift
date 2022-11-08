@@ -20,6 +20,13 @@ class MainViewController: UIViewController {
     @IBOutlet weak var batteryVC: UIView!
     @IBOutlet weak var temperatureVC: UIView!
     
+    @IBOutlet weak var voltageLabel: UILabel!
+    
+    @IBOutlet weak var currentLabel: UILabel!
+    
+    @IBOutlet weak var temp2Label: UILabel!
+    @IBOutlet weak var temp1Label: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
