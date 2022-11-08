@@ -25,9 +25,11 @@ def insert_user(email, pwd, firstname=None, lastname=None):
     else:
         cur.execute("INSERT INTO users (email, pwd, join_date) VALUES (%s, %s, %s)", (email, pwd, now))
     conn.commit()
+    cur.execute("SELECT user_id WHERE join_date=%s", (now))
+    return cur.fetchone()
 
 # see all users in the user table or a specific user based on their email
-def get_user(email=None):
+def get_user(email):
     cur=conn.cursor()
     if email is None:
         cur.execute("SELECT * FROM users")
@@ -39,8 +41,6 @@ def get_user(email=None):
 # delete row from users table based on email
 def delete_user(email):
     cur = conn.cursor()
-    #TODO delete_battery()
-    #TODO delete all session data and session
     cur.execute("DELETE FROM users WHERE email=%s", (email))
     conn.commit()
 
@@ -163,6 +163,8 @@ def create_new_session(battery_id, cur_capacity):
     now = datetime.datetime.now()
     cur.execute("INSERT INTO data_session (battery_id, session_start, cur_capacity) VALUES (%s, %s, %s)", (battery_id, now, cur_capacity))
     conn.commit()
+    cur.execute("SELECT session_id WHERE session_start = %s", (now))
+    return cur.fetchone()
     
 # create new entries for the given values for the given session_id
 def add_raw_data_to(session_id, total_voltage, temperature, voltage_one,
@@ -180,6 +182,8 @@ def get_max_ride_temp(session_id):
    data = cur.fetchone()
    cur.execute("SELECT temp2 FROM temperature WHERE session_id=%s order by temp2 desc", (session_id))
    temp = cur.fetchone()
+   if temp == None:
+    return data if data != None else None
    if temp > data:
       return temp
    return data
@@ -194,3 +198,13 @@ def get_min_ride_temp(session_id):
    if temp < data:
       return temp
    return data
+
+# provides battery_id from user_id (needs to be changed in the future to support multiple batteries)
+def link_to_battery_id(user_id):
+    cur=conn.cursor()
+    cur.execute("SELECT battery_id WHERE user_id=%s", (user_id))
+    return cur.fetchone()
+
+# Main insert data function
+def add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage_two, current):
+    
