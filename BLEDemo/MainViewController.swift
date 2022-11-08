@@ -20,6 +20,13 @@ class MainViewController: UIViewController {
     @IBOutlet weak var batteryVC: UIView!
     @IBOutlet weak var temperatureVC: UIView!
     
+    @IBOutlet weak var voltageLabel: UILabel!
+    
+    @IBOutlet weak var currentLabel: UILabel!
+    
+    @IBOutlet weak var temp2Label: UILabel!
+    @IBOutlet weak var temp1Label: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +35,7 @@ class MainViewController: UIViewController {
         tempBox1.layer.cornerRadius = tempBox1.frame.height / 8
         tempBox2.layer.cornerRadius = tempBox2.frame.height / 8
         batteryVC.layer.cornerRadius = 10
+        temperatureVC.layer.cornerRadius = 10
         
         startTimer();
     }
