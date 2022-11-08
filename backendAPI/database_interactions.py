@@ -207,4 +207,8 @@ def link_to_battery_id(user_id):
 
 # Main insert data function
 def add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage_two, current):
+    for i in current:
+        insert_cur_vol("current", i["timestamp"], i["value"], session_id)
+    # TODO
     
+    # insert_cur_vol("voltage", timestamp, data, session_id):
