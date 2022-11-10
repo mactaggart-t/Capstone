@@ -78,3 +78,16 @@ print(get_user_data('voltage', '7'), end='\n\n')
 print("___________Delete Voltage Data from Table___________")
 delete_data('voltage', '7')
 print(get_user_data('voltage', '7'), end='\n\n')
+
+# checks if user already exists
+print("___________Inserting Already Existing User___________")
+insert_user('ethanlam27@gmail.com', 'duplicate email')
+
+# check login functionality working
+print("___________Checking Login Functionality___________")
+print("email: ethanlam27@gmail.com; password: capstone ==> PASS")
+print(login("ethanlam27@gmail.com", "capstone"))
+print("email: ethanlam27@gmail.com; password: stonecap ==> FAIL")
+login("ethanlam27@gmail.com", "stonecap")
+print("email: lamethan72@gmail.com; password: capstone ==> FAIL")
+login("lamethan72@gmail.com", "capstone")

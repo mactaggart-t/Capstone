@@ -15,6 +15,10 @@ conn = pymysql.connect(
 # insert user data into users table, get the current time and date for joining, first and last names are optional
 def insert_user(email, pwd, firstname=None, lastname=None):
     cur=conn.cursor()
+    if check_email(email):
+        # TODO: handle this better within the GUI
+        print("User already exists!")
+        return
     now = datetime.datetime.now()
     if(firstname!=None and lastname!=None):
         cur.execute("INSERT INTO users (email, pwd, join_date, firstname, lastname) VALUES (%s, %s, %s, %s, %s)", (email, pwd, now, firstname, lastname))
@@ -25,11 +29,11 @@ def insert_user(email, pwd, firstname=None, lastname=None):
     else:
         cur.execute("INSERT INTO users (email, pwd, join_date) VALUES (%s, %s, %s)", (email, pwd, now))
     conn.commit()
-    cur.execute("SELECT user_id WHERE join_date=%s", (now))
-    return cur.fetchone()
+    cur.execute("SELECT * FROM users WHERE email=%s", (email))
+    return cur.fetchone()[0]
 
 # see all users in the user table or a specific user based on their email
-def get_user(email):
+def get_user(email=None):
     cur=conn.cursor()
     if email is None:
         cur.execute("SELECT * FROM users")
@@ -43,6 +47,23 @@ def delete_user(email):
     cur = conn.cursor()
     cur.execute("DELETE FROM users WHERE email=%s", (email))
     conn.commit()
+
+# Check if email already exists, returns 1 if true and 0 if false
+def check_email(email):
+    cur = conn.cursor()
+    cur.execute("SELECT EXISTS(SELECT * FROM users WHERE email=%s)", (email))
+    return cur.fetchone()[0]
+
+# Handle logging in, return user_id if successful
+def login(email, pwd):
+    cur = conn.cursor()
+    cur.execute("SELECT EXISTS(SELECT * FROM users WHERE email=%s AND pwd=%s)", (email, pwd))
+    if cur.fetchone()[0]:
+        return get_user(email)[0][0]
+    else:
+        # TODO: have a better way of handling this within the GUI
+        print("Incorrect username and/or password. Please try again.")
+
 
 ### Current/Voltage ###
 # insert query into voltage/current table
@@ -151,7 +172,7 @@ def get_user_temp_data(session_id, num = -1):
    return data
 
 # delete row from a table based on user id
-#TODO needs to be fixed
+# TODO: needs to be fixed
 def delete_data(table, session_id):
     cur = conn.cursor()
     cur.execute("DELETE FROM " + table + " WHERE session_id=%s", (session_id))
