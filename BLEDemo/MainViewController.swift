@@ -13,10 +13,6 @@ import CoreBluetooth
 class MainViewController: UIViewController {
     private var timer: DispatchSourceTimer?
 
-    @IBOutlet weak var currentBox: UIImageView!
-    @IBOutlet weak var voltageBox: UIImageView!
-    @IBOutlet weak var tempBox2: UIImageView!
-    @IBOutlet weak var tempBox1: UIImageView!
     @IBOutlet weak var batteryVC: UIView!
     @IBOutlet weak var temperatureVC: UIView!
     
@@ -27,13 +23,19 @@ class MainViewController: UIViewController {
     @IBOutlet weak var temp2Label: UILabel!
     @IBOutlet weak var temp1Label: UILabel!
     
+    @IBOutlet weak var voltageBox: UIButton!
+    
+    @IBOutlet weak var tempBox1: UIButton!
+    @IBOutlet weak var currentBox: UIButton!
+    
+    @IBOutlet weak var tempBox2: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentBox.layer.cornerRadius = currentBox.frame.height / 8
-        voltageBox.layer.cornerRadius = voltageBox.frame.height / 8
-        tempBox1.layer.cornerRadius = tempBox1.frame.height / 8
-        tempBox2.layer.cornerRadius = tempBox2.frame.height / 8
+        currentBox.layer.cornerRadius = 10
+        voltageBox.layer.cornerRadius = 10
+        tempBox1.layer.cornerRadius = 10
+        tempBox2.layer.cornerRadius = 10
         batteryVC.layer.cornerRadius = 10
         temperatureVC.layer.cornerRadius = 10
         

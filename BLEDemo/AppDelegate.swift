@@ -16,7 +16,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //
+        let testBool = false
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        //line below is only used if we want to take into account whether or not a user has previously logged in and is still in the same session (not sure if we're doing that)
+        //if let loggedUsername = UserDefaults.standard.string(forKey: "username"){
+        if testBool{
+            //goes directly to home page
+            let tabBarController = storyboard.instantiateViewController(identifier: "TabBar")
+            window?.rootViewController = tabBarController
+        }else{
+            
+            //goes directly to signin screen
+            let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavController")
+            window?.rootViewController = loginNavController
+        }
         return true
+    }
+    
+    func changeRootViewController(_ vc: UIViewController, animated: Bool = true){
+        guard let window = self.window else{
+            return
+        }
+        window.rootViewController = vc
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
