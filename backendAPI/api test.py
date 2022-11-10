@@ -16,8 +16,8 @@ conn = pymysql.connect(
         )
 
 #TODO List
-# fix old functions
-# delete_data
+# Prevent multiple users with the same email
+# delete_user()
 
 
 
