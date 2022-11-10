@@ -16,9 +16,9 @@ conn = pymysql.connect(
 def insert_user(email, pwd, firstname=None, lastname=None):
     cur=conn.cursor()
     if check_email(email):
-        # TODO: handle this better within the GUI
-        print("User already exists!")
-        return
+        # TODO: handle this better within the api (frontend)
+        #print("User already exists!")
+        return -1
     now = datetime.datetime.now()
     if(firstname!=None and lastname!=None):
         cur.execute("INSERT INTO users (email, pwd, join_date, firstname, lastname) VALUES (%s, %s, %s, %s, %s)", (email, pwd, now, firstname, lastname))
@@ -61,8 +61,9 @@ def login(email, pwd):
     if cur.fetchone()[0]:
         return get_user(email)[0][0]
     else:
-        # TODO: have a better way of handling this within the GUI
-        print("Incorrect username and/or password. Please try again.")
+        # TODO: have a better way of handling this within the api (frontend)
+        #print("Incorrect username and/or password. Please try again.")
+        return -1
 
 
 ### Current/Voltage ###
