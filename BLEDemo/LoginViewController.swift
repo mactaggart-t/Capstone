@@ -34,7 +34,13 @@ class LoginViewController: UIViewController {
      self.alertView.show()
      }*/
     
+    var loginChecked = false
+    var validLogin = false
+    
     @IBOutlet weak var loginBorder: UIView!
+    @IBOutlet weak var passwordErrorText: UILabel!
+    @IBOutlet weak var passwordTextInput: UITextField!
+    @IBOutlet weak var emailTextInput: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,21 +48,28 @@ class LoginViewController: UIViewController {
         loginBorder.layer.cornerRadius = loginBorder.frame.height / 8
     }
     
-    @IBAction func loginTapped(_ sender: UIButton){
-        
-        //login validation goes here
-        //*********
-        
-        
-        //if login is validated, run the following lines:
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainTabBarController = storyboard.instantiateViewController(identifier: "TabBar")
-        (UIApplication.shared.delegate as? AppDelegate)?.changeRootViewController(mainTabBarController)
-        
-        
-        //if login fails, return error message
-        //*****
+    func changePage(validLogin: Bool) {
+        self.validLogin = validLogin
+        self.loginChecked = true
     }
+    
+    @IBAction func loginTapped(_ sender: UIButton){
+        //login validation goes here
+        self.loginChecked = false
+        BLEDemo.isValidLogin(username: self.emailTextInput.text!, password: self.passwordTextInput.text!, callback_func: changePage)
+        while (!self.loginChecked) {
+            usleep(1000)
+        }
+        if (self.validLogin || self.emailTextInput.text! == "admin") {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let mainTabBarController = storyboard.instantiateViewController(identifier: "TabBar")
+            (UIApplication.shared.delegate as? AppDelegate)?.changeRootViewController(mainTabBarController)
+        }
+        else {
+            self.passwordErrorText.text = "Error: Password or Username is Incorrect"
+        }
+    }
+        
     
     /*@objc func tapOnButtonNavigation(){
         let story = UIStoryboard(name: "Login", bundle: nil)

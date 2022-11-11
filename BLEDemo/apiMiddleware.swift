@@ -8,8 +8,9 @@
 
 import Foundation
 
-let urlBase = "http://10.110.77.11:5000/"
+let urlBase = "http://10.0.1.144:5000/"
 var sessionID = ""
+var userID = ""
 
 // Send the cache data to the backend
 func sendData(totVoltageCache: [Dictionary<String, String>],
@@ -72,4 +73,39 @@ func getTemperatureData() {
     }
     task.resume()
 
+}
+
+
+// Method to validate a login attempt
+func isValidLogin(username: String, password: String, callback_func: @escaping (_: Bool) -> ()) {
+    let config = URLSessionConfiguration.default
+
+    let session = URLSession(configuration: config)
+
+    let url = URL(string: urlBase + "login")
+    var urlRequest = URLRequest(url: url!)
+    urlRequest.httpMethod = "POST"
+
+    let postDict : [String: Any] = ["username": username, "password": password]
+
+    print("Trying to login " + username + "...")
+    guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
+        return
+    }
+    urlRequest.httpBody = postData
+    
+
+    let task = session.dataTask(with: urlRequest) { data, response, error in
+        guard let data = data else { return }
+        let trimmedString = String(data: data, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
+        if trimmedString == "-1" {
+            callback_func(false)
+        }
+        else {
+            callback_func(true)
+            userID = trimmedString;
+        }
+    }
+
+    task.resume()
 }

@@ -201,7 +201,7 @@
             <objects>
                 <tableViewController id="XZM-Me-sXn" customClass="ScanTableViewController" customModule="BLEDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="x85-ue-dlL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="755"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="wYi-s2-8Gw">
@@ -399,7 +399,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="loginTapped:" destination="LaD-AT-Nid" eventType="touchUpInside" id="dl5-aS-beT"/>
-                                    <segue destination="vzf-07-myt" kind="show" identifier="signInSegue" id="l9s-72-qA6"/>
                                 </connections>
                             </button>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="battery.100" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="DJN-ua-m93">
@@ -434,13 +433,6 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title=""/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Forgot your password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vje-rd-fHp">
-                                <rect key="frame" x="135" y="405.66666666666663" width="104" height="12"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ld-vm-FyW">
                                 <rect key="frame" x="155" y="289.66666666666663" width="62" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -457,18 +449,28 @@
                                     <segue destination="QiZ-M8-NqU" kind="show" id="lOp-hU-t8r"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vje-rd-fHp">
+                                <rect key="frame" x="87" y="406" width="198" height="11"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.5450980392" green="0.30196078430000001" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="kRj-Fc-bVm"/>
                     <connections>
+                        <outlet property="emailTextInput" destination="W16-XY-Ggd" id="SZC-oV-Q6K"/>
                         <outlet property="loginBorder" destination="LZb-EC-KgR" id="5vv-jH-EjG"/>
+                        <outlet property="passwordErrorText" destination="Vje-rd-fHp" id="sUc-l1-WFi"/>
+                        <outlet property="passwordTextInput" destination="c3u-Nr-iKF" id="EPq-lu-Qf8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EmK-Ir-RGl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-65" y="205"/>
+            <point key="canvasLocation" x="-66.400000000000006" y="204.67980295566502"/>
         </scene>
         <!--Create Account View Controller-->
         <scene sceneID="7ep-BQ-s5J">
