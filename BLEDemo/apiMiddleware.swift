@@ -109,3 +109,38 @@ func isValidLogin(username: String, password: String, callback_func: @escaping (
 
     task.resume()
 }
+
+
+// Method to create an account
+func createAccount(username: String, password: String, firstName: String, lastName: String, callback_func: @escaping (_: Bool) -> ()) {
+    let config = URLSessionConfiguration.default
+
+    let session = URLSession(configuration: config)
+
+    let url = URL(string: urlBase + "createAccount")
+    var urlRequest = URLRequest(url: url!)
+    urlRequest.httpMethod = "POST"
+
+    let postDict : [String: Any] = ["username": username, "password": password, "first_name": firstName, "last_name": lastName]
+
+    print("Creating an account for " + username + "...")
+    guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
+        return
+    }
+    urlRequest.httpBody = postData
+    
+
+    let task = session.dataTask(with: urlRequest) { data, response, error in
+        guard let data = data else { return }
+        let trimmedString = String(data: data, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
+        if trimmedString == "-1" {
+            callback_func(false)
+        }
+        else {
+            callback_func(true)
+            userID = trimmedString;
+        }
+    }
+
+    task.resume()
+}

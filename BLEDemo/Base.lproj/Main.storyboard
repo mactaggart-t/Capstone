@@ -532,7 +532,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCW-3p-SKx">
-                                <rect key="frame" x="108" y="469" width="143" height="35"/>
+                                <rect key="frame" x="108" y="512" width="143" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.5450980392" green="0.30196078430000001" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
@@ -543,14 +543,29 @@
                                     <action selector="createTapped:" destination="QiZ-M8-NqU" eventType="touchUpInside" id="ee2-bk-q7Y"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBM-6o-Lrs">
+                                <rect key="frame" x="16" y="465" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="kF4-or-Y1G"/>
+                    <connections>
+                        <outlet property="email" destination="aeD-YH-hDh" id="Bh3-lf-x0y"/>
+                        <outlet property="errorMessage" destination="QBM-6o-Lrs" id="HCS-wO-yfO"/>
+                        <outlet property="firstName" destination="ys0-Ox-70v" id="GT1-va-aJo"/>
+                        <outlet property="lastName" destination="GTB-Lo-EQA" id="Dav-3l-6Vj"/>
+                        <outlet property="passwordOne" destination="oPa-G5-efn" id="aMY-86-4Qf"/>
+                        <outlet property="passwordTwo" destination="hhR-mc-yIi" id="FAY-kb-1Nr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="46g-jP-eLj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-66" y="893"/>
+            <point key="canvasLocation" x="-66.400000000000006" y="892.61083743842369"/>
         </scene>
         <!--Account-->
         <scene sceneID="bQ1-aC-VtM">

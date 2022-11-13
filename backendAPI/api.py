@@ -22,6 +22,19 @@ class Login(Resource):
         return login(username, password)
 
 
+class CreateAccount(Resource):
+    def post(self):
+        data = request.form.to_dict()
+        flipped_data = dict([(value, key) for key, value in data.items()])
+        data_string = flipped_data.get('')
+        data_dict = json.loads(data_string)
+        password = data_dict.get('password')
+        username = data_dict.get('username')
+        first_name = data_dict.get('first_name')
+        last_name = data_dict.get('last_name')
+        return insert_user(username, password, first_name, last_name)
+
+
 class Temperature(Resource):
     def get(self):
         args = request.args
@@ -56,3 +69,4 @@ class LoadRawData(Resource):
 api.add_resource(Temperature, '/temperature')
 api.add_resource(LoadRawData, '/loadRawData')
 api.add_resource(Login, '/login')
+api.add_resource(CreateAccount, '/createAccount')
