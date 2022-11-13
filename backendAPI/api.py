@@ -56,14 +56,23 @@ class LoadRawData(Resource):
         data_string = flipped_data.get('')
         data_dict = json.loads(data_string)
         total_voltage = data_dict.get('totalVoltage')
-        temperature = data_dict.get('temperature')
+        temperature_one = data_dict.get('temperatureOne')
+        temperature_two = data_dict.get('temperatureTwo')
         voltage_one = data_dict.get('voltageOne')
         voltage_two = data_dict.get('voltageTwo')
         current = data_dict.get('current')
         session_id = data_dict.get('sessionID')
+        user_id = data_dict.get('userID')
         if not session_id:
-            session_id = create_new_session()
-        add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage_two, current)
+            battery_id = get_batteries(user_id)
+            if not battery_id:
+                battery_capacity = 48
+                battery_id = insert_battery(user_id, battery_capacity)
+            battery_id = get_batteries(user_id)[0]['battery_id']
+            cur_capacity = 48
+            session_id = create_new_session(battery_id, cur_capacity)
+        add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two,
+         voltage_one, voltage_two, current)
         return int(session_id)
 
 api.add_resource(Temperature, '/temperature')
