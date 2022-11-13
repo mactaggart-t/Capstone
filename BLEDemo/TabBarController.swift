@@ -22,11 +22,13 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
     let totalVoltageID = "Total Voltage"
     let currentID = "Current"
     let temperatureID = "Temperature(C)"
+    let temperatureTwoID = "Temperature 2(C)"
     var totVoltageCache: [Dictionary<String, String>] = []
     var voltageOneCache: [Dictionary<String, String>] = []
     var voltageTwoCache: [Dictionary<String, String>] = []
     var currentCache: [Dictionary<String, String>] = []
     var temperatureCache: [Dictionary<String, String>] = []
+    var temperatureTwoCache: [Dictionary<String, String>] = []
     var nextMessageText: String = "";
     private var timer: DispatchSourceTimer?
     
@@ -84,7 +86,8 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
                                      voltageOneCache: voltageOneCache,
                                      voltageTwoCache: voltageTwoCache,
                                      currentCache: currentCache,
-                                     temperatureCache: temperatureCache)
+                                     temperatureOneCache: temperatureCache,
+                                     temperatureTwoCache: temperatureTwoCache)
     }
     
     // Cache and sort the raw data from the BLE device and add the current timestamp
@@ -108,6 +111,9 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
             break;
         case temperatureID:
             temperatureCache.append(["value": String(data), "timestamp": String(timestamp)]);
+            break;
+        case temperatureTwoID:
+            temperatureTwoCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         default:
             throw NSError();

@@ -79,14 +79,14 @@ def insert_temp(time, temp1, temp2, session_id):
    cur=conn.cursor()
    cur.execute("INSERT INTO temperature (session_id, time, temp1, temp2) VALUES (%s, %s, %s, %s)", (session_id, time, temp1, temp2))
    conn.commit()
-    
+
 ### BATTERY TABLE ###
 # insert battery data into battery table
 def insert_battery(user_id, max_capacity):
     cur=conn.cursor()
     cur.execute("INSERT INTO battery (user_id, max_capacity) VALUES (%s, %s)", (user_id, max_capacity))
     conn.commit()
-    
+
 # see batteries in the battery table, either all of them or a specific user's
 def get_batteries(user_id=None):
     cur=conn.cursor()
@@ -96,13 +96,13 @@ def get_batteries(user_id=None):
         cur.execute("SELECT * FROM battery WHERE user_id=%s", (user_id))
     batteries = cur.fetchall()
     return batteries
-    
+
 # delete row from battery table based on battery id
 def delete_battery(battery_id):
     cur=conn.cursor()
     cur.execute("DELETE FROM battery WHERE battery_id=%s", (battery_id))
     cur.commit()
-    
+
 ### SESSION TABLE ###
 # insert session information into data_session table, get current time and date of the start of the session
 def insert_session(battery_id, cur_capacity):
@@ -110,7 +110,7 @@ def insert_session(battery_id, cur_capacity):
     now = datetime.datetime.now()
     cur.execute("INSERT INTO data_session (battery_id, session_start, cur_capacity)", (battery_id, now, cur_capacity))
     cur.commit()
-    
+
 # see sessions in the data_session table, either all of them or ones for a specific battery
 def get_sessions(battery_id=None):
     cur=conn.cursor()
@@ -120,13 +120,13 @@ def get_sessions(battery_id=None):
         cur.execute("SELECT * FROM data_session WHERE battery_id=%s", (battery_id))
     sessions = cur.fetchall()
     return sessions
-    
+
 # delete row from data_session table based on session id
 def delete_session(session_id):
     cur=conn.cursor()
     cur.execute("DELETE FROM data_session WHERE session_id=%s", (session_id))
     cur.commit()
-    
+
 ### Current/Temperature/Voltage ###
 # insert query into a Current/Voltage table
 def insert_data(table, time, value, session_id):
@@ -178,7 +178,7 @@ def delete_data(table, session_id):
     cur = conn.cursor()
     cur.execute("DELETE FROM " + table + " WHERE session_id=%s", (session_id))
     conn.commit()
-    
+
 # create a new session in the database
 def create_new_session(battery_id, cur_capacity):
     cur=conn.cursor()
@@ -187,16 +187,16 @@ def create_new_session(battery_id, cur_capacity):
     conn.commit()
     cur.execute("SELECT session_id WHERE session_start = %s", (now))
     return cur.fetchone()
-    
+
 # create new entries for the given values for the given session_id
-def add_raw_data_to(session_id, total_voltage, temperature, voltage_one,
- voltage_two, current):
+def add_raw_data_to(session_id, total_voltage, temperature_one,
+ temperature_two, voltage_one, voltage_two, current):
     pass
 
 # get the current temperature for the given session_id (take mean or median of up to previous 30 entries)
 def get_current_temp(session_id):
     return 100.4
-    
+
 # get the peak temperature recorded during the given session_id
 def get_max_ride_temp(session_id):
    cur=conn.cursor()
@@ -209,7 +209,7 @@ def get_max_ride_temp(session_id):
    if temp > data:
       return temp
    return data
-    
+
 # get the minimum temperature recorded during the given session_id
 def get_min_ride_temp(session_id):
    cur=conn.cursor()
@@ -232,5 +232,5 @@ def add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage
     for i in current:
         insert_cur_vol("current", i["timestamp"], i["value"], session_id)
     # TODO
-    
+
     # insert_cur_vol("voltage", timestamp, data, session_id):

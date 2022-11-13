@@ -17,7 +17,8 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
               voltageOneCache: [Dictionary<String, String>],
               voltageTwoCache: [Dictionary<String, String>],
               currentCache: [Dictionary<String, String>],
-              temperatureCache: [Dictionary<String, String>]) {
+              temperatureOneCache: [Dictionary<String, String>],
+              temperatureTwoCache: [Dictionary<String, String>]) {
     let config = URLSessionConfiguration.default
 
     let session = URLSession(configuration: config)
@@ -30,8 +31,10 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
                                     "voltageOne": voltageOneCache,
                                     "votlageTwo": voltageTwoCache,
                                     "current": currentCache,
-                                    "temperature": temperatureCache,
-                                    "sessionID": sessionID]
+                                    "temperatureOne": temperatureOneCache,
+                                    "temperatureTwo": temperatureTwoCache,
+                                    "sessionID": sessionID,
+                                    "userID": userID]
 
     print("Sending data to the backend...")
     guard let postData = try? JSONSerialization.data(withJSONObject: postDict, options: []) else {
