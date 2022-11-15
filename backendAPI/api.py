@@ -81,5 +81,5 @@ api.add_resource(Login, '/login')
 api.add_resource(CreateAccount, '/createAccount')
 
 def get_battery_percentage(v):
-    battery_percentage = 1.58*(v**4) - 79.51*(v**3) + 1502.63*(v**2) - 12619.21*(v) + 39735.81
+    battery_percentage = 1.58*(v**4) + -79.51*(v**3) + 1502.63*(v**2) + -12619.21*(v) + 39735.81
     return battery_percentage
