@@ -80,3 +80,4 @@ api.add_resource(Temperature, '/temperature')
 api.add_resource(LoadRawData, '/loadRawData')
 api.add_resource(Login, '/login')
 api.add_resource(CreateAccount, '/createAccount')
+

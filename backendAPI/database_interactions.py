@@ -242,3 +242,8 @@ def add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage
     # TODO
 
     # insert_cur_vol("voltage", timestamp, data, session_id):
+
+# Calculate battery percentage based on voltage, v
+def get_battery_percentage(v):
+    battery_percentage = 1.58*(v**4) + -79.51*(v**3) + 1502.63*(v**2) + -12619.21*(v) + 39735.81
+    return battery_percentage
