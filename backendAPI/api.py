@@ -13,6 +13,7 @@ parser = reqparse.RequestParser()
 
 class Login(Resource):
     def post(self):
+        print("here")
         data = request.form.to_dict()
         flipped_data = dict([(value, key) for key, value in data.items()])
         data_string = flipped_data.get('')

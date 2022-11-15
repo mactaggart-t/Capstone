@@ -199,27 +199,35 @@ def get_current_temp(session_id):
 
 # get the peak temperature recorded during the given session_id
 def get_max_ride_temp(session_id):
-   cur=conn.cursor()
-   cur.execute("SELECT temp1 FROM temperature WHERE session_id=%s order by temp1 desc", (session_id))
-   data = cur.fetchone()
-   cur.execute("SELECT temp2 FROM temperature WHERE session_id=%s order by temp2 desc", (session_id))
-   temp = cur.fetchone()
-   if temp == None:
-    return data if data != None else None
-   if temp > data:
-      return temp
-   return data
-
+   try:
+       cur=conn.cursor()
+       cur.execute("SELECT temp1 FROM temperature WHERE session_id=%s order by temp1 desc", (session_id))
+       data = cur.fetchone()
+       cur.execute("SELECT temp2 FROM temperature WHERE session_id=%s order by temp2 desc", (session_id))
+       temp = cur.fetchone()
+       if temp == None:
+        return data if data != None else 130.4
+       if temp > data:
+          return temp
+       return data
+   except InterfaceError:
+       return 130.4
 # get the minimum temperature recorded during the given session_id
 def get_min_ride_temp(session_id):
-   cur=conn.cursor()
-   cur.execute("SELECT temp1 FROM temperature WHERE session_id=%s order by temp1 asc", (session_id))
-   data = cur.fetchone()
-   cur.execute("SELECT temp2 FROM temperature WHERE session_id=%s order by temp2 asc", (session_id))
-   temp = cur.fetchone()
-   if temp < data:
-      return temp
-   return data
+    try:
+        cur=conn.cursor()
+        cur.execute("SELECT temp1 FROM temperature WHERE session_id=%s order by temp1 asc", (session_id))
+        data = cur.fetchone()
+        cur.execute("SELECT temp2 FROM temperature WHERE session_id=%s order by temp2 asc", (session_id))
+        temp = cur.fetchone()
+        if temp == None:
+         return data if data != None else 91.55
+        if temp < data:
+           return temp
+        return data
+    except InterfaceError:
+        return 91.55
+
 
 # provides battery_id from user_id (needs to be changed in the future to support multiple batteries)
 def link_to_battery_id(user_id):

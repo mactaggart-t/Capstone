@@ -11,7 +11,6 @@ import CoreBluetooth
 
 
 class MainViewController: UIViewController {
-    private var timer: DispatchSourceTimer?
 
     @IBOutlet weak var batteryVC: UIView!
     @IBOutlet weak var temperatureVC: UIView!
@@ -39,7 +38,6 @@ class MainViewController: UIViewController {
         batteryVC.layer.cornerRadius = 10
         temperatureVC.layer.cornerRadius = 10
         
-        startTimer();
     }
 
     @IBAction func switchViews (sender: UISegmentedControl){
@@ -52,20 +50,5 @@ class MainViewController: UIViewController {
         }
     }
     
-    // Start the 10 second time for the next data send task and clear out all caches
-    func startTimer() {
-        let queue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".timer")
-        timer = DispatchSource.makeTimerSource(queue: queue)
-        timer!.schedule(deadline: .now(), repeating: .seconds(10))
-        timer!.setEventHandler { [weak self] in
-
-            self?.getTempData();
-        }
-        timer!.resume()
-    }
-    
-    func getTempData() {
-        BLEDemo.getTemperatureData();
-    }
 }
 

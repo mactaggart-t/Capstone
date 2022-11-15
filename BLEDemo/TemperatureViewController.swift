@@ -23,7 +23,14 @@ class TemperatureViewController: UIViewController {
     
     @IBOutlet weak var highNum2: UILabel!
     @IBOutlet weak var lowNum2: UILabel!
-    
+    private var timer: DispatchSourceTimer?
+    var lowTemp1: String = ""
+    var lowTemp2: String = ""
+    var currentTemp1: String = ""
+    var currentTemp2: String = ""
+    var highTemp1: String = ""
+    var highTemp2: String = ""
+    var tempUpdated: Bool = false
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,31 +48,54 @@ class TemperatureViewController: UIViewController {
         
         tTop2.layer.cornerRadius = tTop2.frame.height / 3
         tTop2.clipsToBounds = true
-        setSize1()
-        setSize2()
+        setSize1(low: "0", current: "100", high: "200")
+        setSize2(low: "0", current: "100", high: "200")
+        startTimer();
     }
     
-    func setSize1(){
-        let max : Int = 200
-        let maxString = String(max)
-        highNum.text = maxString
-        
-        let low : Int = 100
-        let lowString = String(low)
-        lowNum.text = lowString
+    // Start the 10 second time for the next data send task and clear out all caches
+    func startTimer() {
+        let queue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".timer")
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        timer!.schedule(deadline: .now(), repeating: .seconds(10))
+        timer!.setEventHandler { [weak self] in
+
+            self?.getTempData();
+        }
+        timer!.resume()
+    }
+    
+    func useTempData(lowest: String, current: String, highest: String) {
+        lowTemp1 = lowest
+        currentTemp1 = current
+        highTemp1 = highest
+        lowTemp2 = lowest
+        currentTemp2 = current
+        highTemp2 = highest
+        tempUpdated = true
+    }
+    
+    func getTempData() {
+        tempUpdated = false
+        BLEDemo.getTemperatureData(callback_func: useTempData);
+        while (!self.tempUpdated) {
+            usleep(1000)
+        }
+        setSize1(low: lowTemp1, current: currentTemp1, high: highTemp1)
+        setSize2(low: lowTemp2, current: currentTemp2, high: highTemp2)
+    }
+    
+    func setSize1(low: String, current: String, high: String){
+        highNum.text = high
+        lowNum.text = low
         
         /*var newFrame = self.marker.frame
         newFrame.size.height = 80*/
     }
     
-    func setSize2(){
-        let max : Int = 100
-        let maxString = String(max)
-        highNum2.text = maxString
-        
-        let low : Int = 50
-        let lowString = String(low)
-        lowNum2.text = lowString
+    func setSize2(low: String, current: String, high: String){
+        highNum2.text = high
+        lowNum2.text = low
         
         /*var newFrame = self.marker.frame
         newFrame.size.height = 80

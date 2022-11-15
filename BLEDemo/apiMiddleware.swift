@@ -8,7 +8,7 @@
 
 import Foundation
 
-let urlBase = "http://10.0.1.144:5000/"
+let urlBase = "http://10.110.142.62:5000/"
 var sessionID = ""
 var userID = ""
 
@@ -44,6 +44,7 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
 
     let task = session.dataTask(with: urlRequest) { data, response, error in
         guard let data = data else { return }
+        print(data)
         let trimmedString = String(data: data, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
         sessionID = trimmedString;
     }
@@ -53,9 +54,10 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
 
 
 // Get the current temperature, max session temperature, and min session temperature from the backend
-func getTemperatureData() {
+func getTemperatureData(callback_func: @escaping (_: String, _: String, _: String) -> ()) {
     if (sessionID == "") {
-        return
+        // TODO: return here once working with phone again
+        sessionID = "1"
     }
     let url = URL(string: urlBase + "temperature?sessionID=" + sessionID)
     
@@ -69,9 +71,19 @@ func getTemperatureData() {
     print("Getting temperature from the backend...")
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         // Convert HTTP Response Data to a simple String
-        if let data = data, let dataString = String(data: data, encoding: .utf8) {
-            print("Response data string:\n \(dataString)")
+        var dataDict = ["current_temp": 100.0, "min_ride_temp": 0.0, "max_ride_temp": 200.0]
+        do {
+            dataDict = (try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Double])!;
+        } catch {
+            print("Unable to convert to dictionary")
         }
+        if (dataDict["min_ride_temp"] != nil && dataDict["max_ride_temp"] != nil && dataDict["current_temp"] != nil) {
+            callback_func(String(dataDict["min_ride_temp"]!), String(dataDict["current_temp"]!), String(dataDict["max_ride_temp"]!))
+        }
+//        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+//            let dataDict = convertToDictionary(text: dataString);
+//
+//        }
         
     }
     task.resume()
