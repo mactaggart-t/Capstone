@@ -66,18 +66,43 @@ def login(email, pwd):
         return -1
 
 
-### Current/Voltage ###
-# insert query into voltage/current table
-def insert_cur_vol(table, time, data, session_id):
+### Current ###
+# insert query into current table
+def insert_current(time, data, session_id):
    cur=conn.cursor()
-   cur.execute("INSERT INTO " + table + " (session_id, time, data) VALUES (%s, %s, %s)", (session_id, time, data))
+   cur.execute("INSERT INTO current (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, data))
+   conn.commit()
+
+### Voltage ###
+# insert query into voltage table for totalVoltage
+def insert_voltage_total(time, data, session_id):
+   cur=conn.cursor()
+   cur.execute("INSERT INTO voltage (session_id, time_tot, voltage_tot) VALUES (%s, %s, %s)", (session_id, time, data))
+   conn.commit()
+
+# insert query into voltage table for totalVoltage
+def insert_voltage1(time, data, session_id):
+   cur=conn.cursor()
+   cur.execute("INSERT INTO voltage (session_id, time1, voltage1) VALUES (%s, %s, %s)", (session_id, time, data))
+   conn.commit()
+
+# insert query into voltage table for totalVoltage
+def insert_voltage2(time, data, session_id):
+   cur=conn.cursor()
+   cur.execute("INSERT INTO voltage (session_id, time2, voltage2) VALUES (%s, %s, %s)", (session_id, time, data))
    conn.commit()
 
 ### Temperature ###
 # insert query into temperature table
-def insert_temp(time, temp1, temp2, session_id):
+def insert_temp1(time, temp, session_id):
    cur=conn.cursor()
-   cur.execute("INSERT INTO temperature (session_id, time, temp1, temp2) VALUES (%s, %s, %s, %s)", (session_id, time, temp1, temp2))
+   cur.execute("INSERT INTO temperature (session_id, time1, temp1) VALUES (%s, %s, %s)", (session_id, time, temp))
+   conn.commit()
+
+# insert query into temperature table
+def insert_temp2(time, temp, session_id):
+   cur=conn.cursor()
+   cur.execute("INSERT INTO temperature (session_id, time2, temp2) VALUES (%s, %s, %s)", (session_id, time, temp))
    conn.commit()
 
 ### BATTERY TABLE ###
@@ -127,22 +152,6 @@ def delete_session(session_id):
     cur.execute("DELETE FROM data_session WHERE session_id=%s", (session_id))
     cur.commit()
 
-### Current/Temperature/Voltage ###
-# insert query into a Current/Voltage table
-def insert_data(table, time, value, session_id):
-    if table == 'temperature':
-      insert_temp_data(time, value, session_id)
-      return
-    cur=conn.cursor()
-    cur.execute("INSERT INTO " + table + " (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, value))
-    conn.commit()
-
-# insert query into a Temperature table
-def insert_temp_data(time, value, session_id):
-    cur = conn.cursor()
-    cur.execute("INSERT INTO temperature (session_id, time, temp1, temp2) VALUES (%s, %s, %s, %s)", (session_id, time, value[0], value[1]))
-    conn.commit()
-
 # read the data from a table
 def get_table_data(table):
     cur=conn.cursor()
@@ -151,6 +160,7 @@ def get_table_data(table):
     return data
 
 # read user data from current/voltage table
+# TODO Needs to be changed now that database is different
 def get_user_data(table, session_id, num = -1):
    if table == 'temperature':
       return get_user_temp_data(session_id, num)
@@ -163,6 +173,7 @@ def get_user_data(table, session_id, num = -1):
    return data
 
 # read user data from temperature table
+# TODO Needs to be changed slightly now that database is different
 def get_user_temp_data(session_id, num = -1):
    cur=conn.cursor()
    cur.execute("SELECT session_id, time, temp1, temp2 FROM temperature WHERE session_id=%s order by time desc", (session_id))
@@ -172,7 +183,7 @@ def get_user_temp_data(session_id, num = -1):
       data = cur.fetchall()
    return data
 
-# delete row from a table based on user id
+# delete rows from a table based on session id
 # TODO: needs to be fixed
 def delete_data(table, session_id):
     cur = conn.cursor()
@@ -187,11 +198,6 @@ def create_new_session(battery_id, cur_capacity):
     conn.commit()
     cur.execute("SELECT session_id WHERE session_start = %s", (now))
     return cur.fetchone()
-
-# create new entries for the given values for the given session_id
-def add_raw_data_to(session_id, total_voltage, temperature_one,
- temperature_two, voltage_one, voltage_two, current):
-    pass
 
 # get the current temperature for the given session_id (take mean or median of up to previous 30 entries)
 def get_current_temp(session_id):
@@ -238,10 +244,13 @@ def link_to_battery_id(user_id):
 # Main insert data function
 def add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage_two, current):
     for i in current:
-        insert_cur_vol("current", i["timestamp"], i["value"], session_id)
+        # TODO insert_current("current", i["timestamp"], i["value"], session_id)
+        pass
     # TODO
+    
 
     # insert_cur_vol("voltage", timestamp, data, session_id):
+    pass
 
 # Calculate battery percentage based on voltage, v
 def get_battery_percentage(v):
