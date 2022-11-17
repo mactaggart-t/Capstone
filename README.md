@@ -32,7 +32,7 @@ This is the port being exposed by your laptop to the world when running this ser
 It will almost certainly be different from this exact string.
 
 To enable backend connections while using the app, go to the 
-MainViewController in the swift code and change the urlBase constant to whatever url 
+apiMiddleware in the swift code and change the urlBase constant to whatever url 
 and port is provided to you
 
 ### Frontend

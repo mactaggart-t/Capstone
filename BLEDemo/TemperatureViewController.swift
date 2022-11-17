@@ -20,9 +20,14 @@ class TemperatureViewController: UIViewController {
     
     @IBOutlet weak var marker: UIView!
     
+    @IBOutlet weak var marker2: UIView!
     
     @IBOutlet weak var highNum2: UILabel!
     @IBOutlet weak var lowNum2: UILabel!
+    
+    @IBOutlet weak var currNum2: UILabel!
+    
+    @IBOutlet weak var currNum: UILabel!
     private var timer: DispatchSourceTimer?
     var lowTemp1: String = ""
     var lowTemp2: String = ""
@@ -48,8 +53,8 @@ class TemperatureViewController: UIViewController {
         
         tTop2.layer.cornerRadius = tTop2.frame.height / 3
         tTop2.clipsToBounds = true
-        setSize1(low: "0", current: "100", high: "200")
-        setSize2(low: "0", current: "100", high: "200")
+        setSize1(low: "0", current: "108", high: "200")
+        setSize2(low: "0", current: "150", high: "200")
         startTimer();
     }
     
@@ -57,7 +62,7 @@ class TemperatureViewController: UIViewController {
     func startTimer() {
         let queue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".timer")
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer!.schedule(deadline: .now(), repeating: .seconds(10))
+        timer!.schedule(deadline: .now(), repeating: .seconds(5))
         timer!.setEventHandler { [weak self] in
 
             self?.getTempData();
@@ -79,7 +84,7 @@ class TemperatureViewController: UIViewController {
         tempUpdated = false
         BLEDemo.getTemperatureData(callback_func: useTempData);
         while (!self.tempUpdated) {
-            usleep(1000)
+            usleep(500)
         }
         setSize1(low: lowTemp1, current: currentTemp1, high: highTemp1)
         setSize2(low: lowTemp2, current: currentTemp2, high: highTemp2)
@@ -88,6 +93,22 @@ class TemperatureViewController: UIViewController {
     func setSize1(low: String, current: String, high: String){
         highNum.text = high
         lowNum.text = low
+        currNum.text = current
+        //let a: Int = Int(currNum.text ?? "")!
+        //if(a > 100){
+        
+        /*    let newHeight: CGFloat = 145
+            //width should stay the same - 45
+            UIView.animate(withDuration: 3.0, //1
+                delay: 0.0, //2
+                usingSpringWithDamping: 0.3, //3
+                initialSpringVelocity: 1, //4
+                options: UIView.AnimationOptions.curveEaseInOut, //5
+                animations: ({ //6
+                    self.marker.frame = CGRect(x: 0, y: -5, width: 45, height: newHeight)
+                    self.marker.center = self.view.center
+            }), completion: nil)//}*/
+        
         
         /*var newFrame = self.marker.frame
         newFrame.size.height = 80*/
@@ -96,7 +117,7 @@ class TemperatureViewController: UIViewController {
     func setSize2(low: String, current: String, high: String){
         highNum2.text = high
         lowNum2.text = low
-        
+        currNum2.text = current
         /*var newFrame = self.marker.frame
         newFrame.size.height = 80
          */

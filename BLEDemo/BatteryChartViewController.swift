@@ -46,8 +46,9 @@ class BatteryChartViewController: UIViewController {
     func setData(){
         let set1 = LineChartDataSet(entries: yValues, label: "Battery Percentage")
         set1.mode = .cubicBezier
+        
         set1.drawCirclesEnabled = false
-        set1.lineWidth = 3
+        set1.lineWidth = 2
         set1.setColor(.white)
         set1.fill = ColorFill(color: .white)
         set1.fillAlpha = 0.8
@@ -62,7 +63,12 @@ class BatteryChartViewController: UIViewController {
         ChartDataEntry(x:2, y:12.0),
         ChartDataEntry(x:3, y:12.5),
         ChartDataEntry(x:4, y:13.0),
-        ChartDataEntry(x:5, y:14.0)
+        ChartDataEntry(x:5, y:14.0),
+        ChartDataEntry(x:6, y:5),
+        ChartDataEntry(x:7, y:20),
+        ChartDataEntry(x:8, y:30),
+        ChartDataEntry(x:9, y:9),
+        ChartDataEntry(x:10, y:15)
     ]
     
 
