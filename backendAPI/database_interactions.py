@@ -66,44 +66,45 @@ def login(email, pwd):
         return -1
 
 
-### Current ###
-# insert query into current table
-def insert_current(time, data, session_id):
+### Data Insertion ###
+# insert query into database tables
+# Table Names: current, temperature1, temperature2, voltage1, voltage2, voltage_total
+def insert_data(table, time, value, session_id):
    cur=conn.cursor()
-   cur.execute("INSERT INTO current (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, data))
+   cur.execute("INSERT INTO " + table + " (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, value))
    conn.commit()
 
 ### Voltage ###
 # insert query into voltage table for totalVoltage
-def insert_voltage_total(time, data, session_id):
-   cur=conn.cursor()
-   cur.execute("INSERT INTO voltage (session_id, time_tot, voltage_tot) VALUES (%s, %s, %s)", (session_id, time, data))
-   conn.commit()
+#def insert_voltage_total(time, data, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO voltage (session_id, time_tot, voltage_tot) VALUES (%s, %s, %s)", (session_id, time, data))
+#   conn.commit()
 
 # insert query into voltage table for totalVoltage
-def insert_voltage1(time, data, session_id):
-   cur=conn.cursor()
-   cur.execute("INSERT INTO voltage (session_id, time1, voltage1) VALUES (%s, %s, %s)", (session_id, time, data))
-   conn.commit()
+#def insert_voltage1(time, data, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO voltage (session_id, time1, voltage1) VALUES (%s, %s, %s)", (session_id, time, data))
+#   conn.commit()
 
 # insert query into voltage table for totalVoltage
-def insert_voltage2(time, data, session_id):
-   cur=conn.cursor()
-   cur.execute("INSERT INTO voltage (session_id, time2, voltage2) VALUES (%s, %s, %s)", (session_id, time, data))
-   conn.commit()
+#def insert_voltage2(time, data, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO voltage (session_id, time2, voltage2) VALUES (%s, %s, %s)", (session_id, time, data))
+#   conn.commit()
 
 ### Temperature ###
 # insert query into temperature table
-def insert_temp1(time, temp, session_id):
-   cur=conn.cursor()
-   cur.execute("INSERT INTO temperature (session_id, time1, temp1) VALUES (%s, %s, %s)", (session_id, time, temp))
-   conn.commit()
+#def insert_temp1(time, temp, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO temperature (session_id, time1, temp1) VALUES (%s, %s, %s)", (session_id, time, temp))
+#   conn.commit()
 
 # insert query into temperature table
-def insert_temp2(time, temp, session_id):
-   cur=conn.cursor()
-   cur.execute("INSERT INTO temperature (session_id, time2, temp2) VALUES (%s, %s, %s)", (session_id, time, temp))
-   conn.commit()
+#def insert_temp2(time, temp, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO temperature (session_id, time2, temp2) VALUES (%s, %s, %s)", (session_id, time, temp))
+#   conn.commit()
 
 ### BATTERY TABLE ###
 # insert battery data into battery table
@@ -242,15 +243,19 @@ def link_to_battery_id(user_id):
     return cur.fetchone()
 
 # Main insert data function
-def add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage_two, current):
-    for i in current:
-        # TODO insert_current("current", i["timestamp"], i["value"], session_id)
-        pass
-    # TODO
-    
-
-    # insert_cur_vol("voltage", timestamp, data, session_id):
-    pass
+def add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two, voltage_one, voltage_two, current):
+    for h in total_voltage:
+        insert_data("voltage_total", h["timestamp"], h["value"], session_id)
+    for i in temperature_one:
+        insert_data("temperature1", i["timestamp"], i["value"], session_id)
+    for j in temperature_two:
+        insert_data("temperature2", j["timestamp"], j["value"], session_id)
+    for k in voltage_one:
+        insert_data("voltage1", k["timestamp"], k["value"], session_id)
+    for l in voltage_two:
+        insert_data("voltage2", l["timestamp"], l["value"], session_id)
+    for m in current:
+        insert_data("current", m["timestamp"], m["value"], session_id)
 
 # Calculate battery percentage based on voltage, v
 def get_battery_percentage(v):
