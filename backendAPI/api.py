@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
+import numpy as np
 import pymysql
 import json
 from database_interactions import *
@@ -49,6 +50,19 @@ class Temperature(Resource):
                 "min_ride_temp": min_ride_temp}
 
 
+class BatteryPercentage(Resource):
+    def get(self):
+        args = request.args
+        args_dict = args.to_dict()
+        session_id = int(args_dict.get("sessionID"))
+        all_voltages = get_total_voltages(session_id)
+        print(all_voltages)
+        ten_spaced_elems = all_voltages[np.round(np.linspace(0, len(all_voltages)-1, 10)).astype(float)]
+        print(ten_spaced_elems)
+        battery_percentages = map(get_battery_percentage, ten_spaced_elems)
+        return battery_percentages
+
+
 
 class LoadRawData(Resource):
     def post(self):
@@ -65,13 +79,17 @@ class LoadRawData(Resource):
         session_id = data_dict.get('sessionID')
         user_id = data_dict.get('userID')
         if not session_id:
-            battery_id = get_batteries(user_id)
-            if not battery_id:
-                battery_capacity = 48
-                battery_id = insert_battery(user_id, battery_capacity)
-            battery_id = get_batteries(user_id)[0]['battery_id']
+            # battery_id = get_batteries(user_id)
+            # if not battery_id:
+            #     battery_capacity = 48
+            #     battery_id = insert_battery(user_id, battery_capacity)
+            # battery_id = get_batteries(user_id)[0]['battery_id']
             cur_capacity = 48
-            session_id = create_new_session(battery_id, cur_capacity)
+            # TODO: Replace with above code
+            battery_id = 10
+            # TODO: add back in
+            # session_id = create_new_session(battery_id, cur_capacity)
+            session_id = 1
         add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two,
          voltage_one, voltage_two, current)
         return int(session_id)
@@ -80,4 +98,4 @@ api.add_resource(Temperature, '/temperature')
 api.add_resource(LoadRawData, '/loadRawData')
 api.add_resource(Login, '/login')
 api.add_resource(CreateAccount, '/createAccount')
-
+api.add_resource(BatteryPercentage, '/batteryPercentages')

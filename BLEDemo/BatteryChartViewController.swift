@@ -10,6 +10,7 @@ import UIKit
 import Charts
 import TinyConstraints
 class BatteryChartViewController: UIViewController {
+    private var timer: DispatchSourceTimer?
 
     lazy var lineChartView: LineChartView = {
         let frame = CGRect(x: 0, y: 0, width: 340, height: 215)
@@ -37,6 +38,7 @@ class BatteryChartViewController: UIViewController {
         view.addSubview(lineChartView)
         
         setData()
+        startTimer()
     }
     
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight){
@@ -57,6 +59,24 @@ class BatteryChartViewController: UIViewController {
         lineChartView.data = data
         
     }
+    
+    // Start the 10 second time for the next data send task and clear out all caches
+    func startTimer() {
+        let queue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".timer")
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        timer!.schedule(deadline: .now(), repeating: .seconds(10))
+        timer!.setEventHandler { [weak self] in
+
+            BLEDemo.getBatteryPercentages(callback_func: self!.updateChart)
+
+        }
+        timer!.resume()
+    }
+    
+    func updateChart(xyPairs: [(Float, Float)]) {
+        print(xyPairs)
+    }
+    
     let yValues: [ChartDataEntry] = [
         ChartDataEntry(x:0.0, y:10.0),
         ChartDataEntry(x:1, y:11.0),

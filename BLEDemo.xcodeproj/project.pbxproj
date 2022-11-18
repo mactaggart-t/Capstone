@@ -194,6 +194,7 @@
 				TargetAttributes = {
 					7850987F1D365ADD00976091 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = DTT7R7JUAY;
 						DevelopmentTeamName = "AnalogFolk Ltd";
 						LastSwiftMigration = 1340;
 						ProvisioningStyle = Automatic;
@@ -480,7 +481,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DTT7R7JUAY;
 				INFOPLIST_FILE = BLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -499,7 +500,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DTT7R7JUAY;
 				INFOPLIST_FILE = BLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -8,7 +8,7 @@
 
 import Foundation
 
-let urlBase = "http://10.110.65.50:5000/"
+let urlBase = "http://10.110.142.62:5000/"
 var sessionID = ""
 var userID = ""
 
@@ -56,8 +56,7 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
 // Get the current temperature, max session temperature, and min session temperature from the backend
 func getTemperatureData(callback_func: @escaping (_: String, _: String, _: String) -> ()) {
     if (sessionID == "") {
-        // TODO: return here once working with phone again
-        sessionID = "1"
+        return
     }
     let url = URL(string: urlBase + "temperature?sessionID=" + sessionID)
     
@@ -80,11 +79,6 @@ func getTemperatureData(callback_func: @escaping (_: String, _: String, _: Strin
         if (dataDict["min_ride_temp"] != nil && dataDict["max_ride_temp"] != nil && dataDict["current_temp"] != nil) {
             callback_func(String(dataDict["min_ride_temp"]!), String(dataDict["current_temp"]!), String(dataDict["max_ride_temp"]!))
         }
-//        if let data = data, let dataString = String(data: data, encoding: .utf8) {
-//            let dataDict = convertToDictionary(text: dataString);
-//
-//        }
-        
     }
     task.resume()
 
@@ -158,4 +152,30 @@ func createAccount(username: String, password: String, firstName: String, lastNa
     }
 
     task.resume()
+}
+
+
+// Get a list of 10 sample battery percentages from the current session
+func getBatteryPercentages(callback_func: @escaping (_: [(Float, Float)]) -> ()) {
+    if (sessionID == "") {
+        return
+    }
+    let url = URL(string: urlBase + "batteryPercentages?sessionID=" + sessionID)
+    
+    guard let requestUrl = url else { fatalError() }
+    // Create URL Request
+    var request = URLRequest(url: requestUrl)
+    // Specify HTTP Method to use
+    request.httpMethod = "GET"
+    request.setValue(sessionID, forHTTPHeaderField: "SessionID")
+    // Send HTTP Request
+    print("Getting battery percentages from the backend...")
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        // Convert HTTP Response Data to a simple String
+        let trimmedString = String(data: data!, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
+        print(trimmedString)
+        
+    }
+    task.resume()
+
 }

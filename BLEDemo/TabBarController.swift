@@ -17,12 +17,12 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
     
     let BLEService = "DFB0"
     let BLECharacteristic = "DFB1"
-    let battery1ID = "Battery1 Voltage"
+    let battery1ID = "Battery 1 Voltage"
     let battery2ID = "Battery 2 Voltage"
     let totalVoltageID = "Total Voltage"
     let currentID = "Current"
-    let temperatureID = "Temperature(C)"
-    let temperatureTwoID = "Temperature 2(C)"
+    let temperatureID = "Battery 1 Temperature(C)"
+    let temperatureTwoID = "Battery 2 Temperature(C)"
     var totVoltageCache: [Dictionary<String, String>] = []
     var voltageOneCache: [Dictionary<String, String>] = []
     var voltageTwoCache: [Dictionary<String, String>] = []
@@ -92,10 +92,13 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
     
     // Cache and sort the raw data from the BLE device and add the current timestamp
     func cacheData(dataString: String) throws {
+        print(dataString)
         let splitString = dataString.split(separator: ":")
         let type = splitString[0]
         let data = splitString[1]
         let timestamp = NSDate().timeIntervalSince1970
+        print("-------Printing Type-------")
+        print(type)
         switch type {
         case battery1ID:
             voltageOneCache.append(["value": String(data), "timestamp": String(timestamp)]);
@@ -113,6 +116,7 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
             temperatureCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         case temperatureTwoID:
+            print("got here")
             temperatureTwoCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         default:

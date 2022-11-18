@@ -1,6 +1,8 @@
 # This file contains backend interaction with the database (AWS Server).
 import datetime
 import pymysql
+# TODO: remove unused import after getting voltages is fixed
+import random
 
 # Establish a conection with the database
 conn = pymysql.connect(
@@ -79,6 +81,14 @@ def insert_voltage_total(time, data, session_id):
    cur=conn.cursor()
    cur.execute("INSERT INTO voltage (session_id, time_tot, voltage_tot) VALUES (%s, %s, %s)", (session_id, time, data))
    conn.commit()
+
+def get_total_voltages(session_id):
+    # TODO: uncomment when this table is implemented, test with the table (should work, but possible idk the syntax anymore)
+    # cur=conn.cursor()
+    # cur.execute("SELECT (voltage_tot, time_tot) FROM total_voltage WHERE session_id=%s", session_id)
+    # conn.commit()
+    return random.choices(range(22, 26), 135)
+
 
 # insert query into voltage table for totalVoltage
 def insert_voltage1(time, data, session_id):
@@ -242,12 +252,12 @@ def link_to_battery_id(user_id):
     return cur.fetchone()
 
 # Main insert data function
-def add_raw_data_to(session_id, total_voltage, temperature, voltage_one, voltage_two, current):
+def add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two, voltage_one, voltage_two, current):
     for i in current:
         # TODO insert_current("current", i["timestamp"], i["value"], session_id)
         pass
     # TODO
-    
+
 
     # insert_cur_vol("voltage", timestamp, data, session_id):
     pass
