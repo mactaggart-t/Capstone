@@ -91,3 +91,65 @@ print("email: ethanlam27@gmail.com; password: stonecap ==> FAIL")
 login("ethanlam27@gmail.com", "stonecap")
 print("email: lamethan72@gmail.com; password: capstone ==> FAIL")
 login("lamethan72@gmail.com", "capstone")
+
+
+
+
+# placing extra code here - want to keep this just in case database_interactions isn't working
+
+### Voltage ###
+# insert query into voltage table for totalVoltage
+#def insert_voltage_total(time, data, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO voltage (session_id, time_tot, voltage_tot) VALUES (%s, %s, %s)", (session_id, time, data))
+#   conn.commit()
+
+# insert query into voltage table for totalVoltage
+#def insert_voltage1(time, data, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO voltage (session_id, time1, voltage1) VALUES (%s, %s, %s)", (session_id, time, data))
+#   conn.commit()
+
+# insert query into voltage table for totalVoltage
+#def insert_voltage2(time, data, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO voltage (session_id, time2, voltage2) VALUES (%s, %s, %s)", (session_id, time, data))
+#   conn.commit()
+
+### Temperature ###
+# insert query into temperature table
+#def insert_temp1(time, temp, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO temperature (session_id, time1, temp1) VALUES (%s, %s, %s)", (session_id, time, temp))
+#   conn.commit()
+
+# insert query into temperature table
+#def insert_temp2(time, temp, session_id):
+#   cur=conn.cursor()
+#   cur.execute("INSERT INTO temperature (session_id, time2, temp2) VALUES (%s, %s, %s)", (session_id, time, temp))
+#   conn.commit()
+
+
+
+
+
+## read user data from temperature table
+## TODO Needs to be changed slightly now that database is different
+##def get_user_temp_data(session_id, num = -1):
+#   cur=conn.cursor()
+#   cur.execute("SELECT session_id, time, temp1, temp2 FROM temperature WHERE session_id=%s order by time desc", (session_id))
+#   if (num > -1):
+#      data = cur.fetchmany(size = num)
+#   else:
+#      data = cur.fetchall()
+#   return data
+
+
+
+## insert session information into data_session table, get current time and date of the start of the session
+## Outdated
+#def insert_session(battery_id, cur_capacity):
+#    cur=conn.cursor()
+#    now = datetime.datetime.now()
+#    cur.execute("INSERT INTO data_session (battery_id, session_start, cur_capacity)", (battery_id, now, cur_capacity))
+#    conn.commit()
