@@ -78,7 +78,7 @@ def login(email, pwd):
 
 # insert query into database tables
 # Table Names: 
-# current 
+# current
 # temperature1
 # temperature2
 # voltage1
@@ -155,7 +155,7 @@ def get_batteries(user_id=None):
 def delete_battery(battery_id):
     cur=conn.cursor()
     cur.execute("DELETE FROM battery WHERE battery_id=%s", (battery_id))
-    cur.commit()
+    conn.commit()
 
 
 "_____________________________________________________________"
@@ -186,7 +186,7 @@ def get_sessions(battery_id=None):
 def delete_session(session_id):
     cur=conn.cursor()
     cur.execute("DELETE FROM data_session WHERE session_id=%s", (session_id))
-    cur.commit()
+    conn.commit()
 
 
 "_______________________________________________________________"
