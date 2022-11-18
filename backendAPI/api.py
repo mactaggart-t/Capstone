@@ -4,6 +4,7 @@ import numpy as np
 import pymysql
 import json
 from database_interactions import *
+import time
 
 
 app = Flask(__name__)
@@ -14,7 +15,6 @@ parser = reqparse.RequestParser()
 
 class Login(Resource):
     def post(self):
-        print("here")
         data = request.form.to_dict()
         flipped_data = dict([(value, key) for key, value in data.items()])
         data_string = flipped_data.get('')
@@ -56,10 +56,13 @@ class BatteryPercentage(Resource):
         args_dict = args.to_dict()
         session_id = int(args_dict.get("sessionID"))
         all_voltages = get_total_voltages(session_id)
-        print(all_voltages)
-        ten_spaced_elems = all_voltages[np.round(np.linspace(0, len(all_voltages)-1, 10)).astype(float)]
-        print(ten_spaced_elems)
-        battery_percentages = map(get_battery_percentage, ten_spaced_elems)
+        ten_spaced_elems_idx = np.round(np.linspace(0, len(all_voltages)-1, 10)).astype(int)
+        ten_spaced_elems = [all_voltages[idx] for idx in ten_spaced_elems_idx]
+        battery_percentages = []
+        for voltage_time_pair in ten_spaced_elems:
+            voltage, timestamp = voltage_time_pair
+            battery_percentages.append((get_battery_percentage(voltage),
+             timestamp))
         return battery_percentages
 
 
@@ -90,8 +93,7 @@ class LoadRawData(Resource):
             # TODO: add back in
             # session_id = create_new_session(battery_id, cur_capacity)
             session_id = 1
-        add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two,
-         voltage_one, voltage_two, current)
+        add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two, voltage_one, voltage_two, current)
         return int(session_id)
 
 api.add_resource(Temperature, '/temperature')

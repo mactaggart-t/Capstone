@@ -57,6 +57,7 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
         timer!.setEventHandler { [weak self] in
 
             self?.sendData()
+            
 
             DispatchQueue.main.async {
                 self?.resetCaches();

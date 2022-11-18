@@ -29,7 +29,7 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
 
     let postDict : [String: Any] = ["totalVoltage": totVoltageCache,
                                     "voltageOne": voltageOneCache,
-                                    "votlageTwo": voltageTwoCache,
+                                    "voltageTwo": voltageTwoCache,
                                     "current": currentCache,
                                     "temperatureOne": temperatureOneCache,
                                     "temperatureTwo": temperatureTwoCache,
@@ -156,9 +156,9 @@ func createAccount(username: String, password: String, firstName: String, lastNa
 
 
 // Get a list of 10 sample battery percentages from the current session
-func getBatteryPercentages(callback_func: @escaping (_: [(Float, Float)]) -> ()) {
+func getBatteryPercentages(callback_func: @escaping (_: [[Double]]) -> ()) -> Bool {
     if (sessionID == "") {
-        return
+        return true
     }
     let url = URL(string: urlBase + "batteryPercentages?sessionID=" + sessionID)
     
@@ -171,11 +171,21 @@ func getBatteryPercentages(callback_func: @escaping (_: [(Float, Float)]) -> ())
     // Send HTTP Request
     print("Getting battery percentages from the backend...")
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-        // Convert HTTP Response Data to a simple String
-        let trimmedString = String(data: data!, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
-        print(trimmedString)
+        do {
+            let responseObject = try JSONDecoder().decode([[Double]].self, from: data!)
+            callback_func(responseObject)
+        } catch {
+            print(error) // parsing error
+            
+            // Convert HTTP Response Data to a simple String
+            if (data != nil) {
+                print(type(of: data))
+                let trimmedString = String(data: data!, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
+                print(trimmedString)
+            }
+        }
         
     }
     task.resume()
-
+    return false
 }

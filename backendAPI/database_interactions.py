@@ -3,6 +3,7 @@ import datetime
 import pymysql
 # TODO: remove unused import after getting voltages is fixed
 import random
+from datetime import datetime, timedelta
 
 # Establish a conection with the database
 conn = pymysql.connect(
@@ -111,7 +112,10 @@ def get_total_voltages(session_id):
     # cur=conn.cursor()
     # cur.execute("SELECT (voltage_tot, time_tot) FROM total_voltage WHERE session_id=%s", session_id)
     # conn.commit()
-    return random.choices(range(22, 26), 135)
+    return [
+    (random.choice([23.0, 23.55, 24, 24.05, 25, 25.8, 26.10, 26.5, 26.6, 26.9, 27, 27.11]),
+     idx)
+      for idx in range(135)]
 
 
 # insert query into voltage table for totalVoltage
@@ -266,5 +270,8 @@ def link_to_battery_id(user_id):
 
 # Calculate battery percentage based on voltage, v
 def get_battery_percentage(v):
-    battery_percentage = 1.58*(v**4) + -79.51*(v**3) + 1502.63*(v**2) + -12619.21*(v) + 39735.81
-    return battery_percentage
+    if v > 25.8:
+        battery_percentage = 33.5466*(v**2) - 1688.4695*v + 21239.0384
+    else:
+        battery_percentage = 4.72*v - 111
+    return max(0, min(100, battery_percentage))

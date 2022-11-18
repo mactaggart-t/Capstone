@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v98-xZ-XnL">
-                                <rect key="frame" x="23" y="219" width="325" height="215"/>
+                                <rect key="frame" x="23" y="219" width="324" height="215"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="cHy-HC-qg4" kind="embed" id="ppU-ly-qjr"/>
@@ -65,7 +65,7 @@
                                 </connections>
                             </segmentedControl>
                             <containerView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EKc-8c-oLP">
-                                <rect key="frame" x="23" y="219" width="325" height="215"/>
+                                <rect key="frame" x="23" y="219" width="324" height="215"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="hPG-Ol-7Ja" kind="embed" id="85N-hy-DQc"/>
@@ -152,7 +152,7 @@
                                     <fragment content="Power">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -165,7 +165,7 @@
                                     <fragment content="Total Voltage">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -178,7 +178,7 @@
                                     <fragment content="Label">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="24" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -204,7 +204,7 @@
                                     <fragment content="Label">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="24" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="24"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -457,7 +457,7 @@
                                         <attributedString key="attributedText">
                                             <fragment content="Sign In">
                                                 <attributes>
-                                                    <font key="NSFont" size="20" name="SFPro-Regular"/>
+                                                    <font key="NSFont" metaFont="system" size="20"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
@@ -472,7 +472,7 @@
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Sign Up">
                                                     <attributes>
-                                                        <font key="NSFont" size="18" name="SFPro-Regular"/>
+                                                        <font key="NSFont" metaFont="system" size="18"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -491,7 +491,7 @@
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Sign In">
                                                     <attributes>
-                                                        <font key="NSFont" size="18" name="SFPro-Regular"/>
+                                                        <font key="NSFont" metaFont="system" size="18"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -514,7 +514,6 @@
                                 <rect key="frame" x="91" y="321.66666666666663" width="191" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="SFPro-Regular" family="SF Pro" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="email"/>
                             </textField>
@@ -532,7 +531,7 @@
                                     <fragment content=" Battery Management System">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="20" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="20"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -588,7 +587,7 @@
                                     <fragment content=" Create an Account">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="30" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="30"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -644,7 +643,7 @@
                                     <attributedString key="attributedTitle">
                                         <fragment content="Create Account">
                                             <attributes>
-                                                <font key="NSFont" size="18" name="SFPro-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="18"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
@@ -737,7 +736,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="First Name:">
                                         <attributes>
-                                            <font key="NSFont" size="16" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="16"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -756,7 +755,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Last Name:">
                                         <attributes>
-                                            <font key="NSFont" size="16" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="16"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -768,7 +767,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Email:">
                                         <attributes>
-                                            <font key="NSFont" size="16" name="SFPro-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="16"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -797,7 +796,7 @@
                         <viewControllerLayoutGuide type="bottom" id="yaO-wX-RsL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NYc-8u-7gB">
-                        <rect key="frame" x="0.0" y="0.0" width="325" height="215"/>
+                        <rect key="frame" x="0.0" y="0.0" width="324" height="215"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.043137254899999998" green="0.30980392159999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -816,7 +815,7 @@
                         <viewControllerLayoutGuide type="bottom" id="cBM-RH-uo1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WhH-O3-Kxq">
-                        <rect key="frame" x="0.0" y="0.0" width="325" height="215"/>
+                        <rect key="frame" x="0.0" y="0.0" width="324" height="215"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4kp-Lu-1un">
