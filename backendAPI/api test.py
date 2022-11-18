@@ -48,7 +48,7 @@ print(get_user(), end='\n\n')
 # def delete_data(table, user_id):
 # inserts data into current
 print("___________Insert Current Data into Table___________")
-insert_data('current', '10', '80', '7')
+insert_data('current', '2020081329', '80', '7')
 insert_data('current', '12', '54', '7')
 print(get_user_data('current', '7'), end='\n\n')
 # delete a row froms current
