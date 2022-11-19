@@ -14,7 +14,7 @@ import TinyConstraints
 class BatteryChartViewController: UIViewController {
     private var timer: DispatchSourceTimer?
     var yValues: [ChartDataEntry] = []
-
+    
     lazy var lineChartView: LineChartView = {
         let frame = CGRect(x: 0, y: 0, width: 340, height: 215)
         let chartView = LineChartView(frame: frame)
@@ -33,6 +33,7 @@ class BatteryChartViewController: UIViewController {
         chartView.xAxis.setLabelCount(6, force: false)
         chartView.xAxis.labelTextColor = .white
         chartView.xAxis.axisLineColor = .systemBlue
+        
         return chartView
     }()
     override func viewDidLoad() {

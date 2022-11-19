@@ -37,6 +37,18 @@ class TemperatureViewController: UIViewController {
     var highTemp2: String = ""
     var tempUpdated: Bool = false
    
+    var minWidth: Int = 10
+    var maxWidth: Int = 110
+    var barHeight: Int = 40
+    
+    var barStartX: Int = 122
+    var barStartY: Int = 41
+    var bar2StartX: Int = 122
+    var bar2StartY: Int = 131
+    
+    var barWidth: Int = 0
+    var barWidth2: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,16 +65,16 @@ class TemperatureViewController: UIViewController {
         
         tTop2.layer.cornerRadius = tTop2.frame.height / 3
         tTop2.clipsToBounds = true
-        setSize1(low: "0", current: "108", high: "200")
-        setSize2(low: "0", current: "150", high: "200")
-        startTimer();
+        setSize1(low: "100", current: "180", high: "200")
+        setSize2(low: "100", current: "100", high: "200")
+        startTimer()
     }
     
     // Start the 10 second time for the next data send task and clear out all caches
     func startTimer() {
         let queue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".timer")
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer!.schedule(deadline: .now(), repeating: .seconds(5))
+        timer!.schedule(deadline: .now(), repeating: .seconds(10))
         timer!.setEventHandler { [weak self] in
 
             self?.getTempData();
@@ -84,16 +96,36 @@ class TemperatureViewController: UIViewController {
         tempUpdated = false
         BLEDemo.getTemperatureData(callback_func: useTempData);
         while (!self.tempUpdated) {
-            usleep(500)
+            usleep(1000)
         }
+        
+        
+        
         setSize1(low: lowTemp1, current: currentTemp1, high: highTemp1)
         setSize2(low: lowTemp2, current: currentTemp2, high: highTemp2)
     }
     
     func setSize1(low: String, current: String, high: String){
+        //set labels
         highNum.text = high
         lowNum.text = low
         currNum.text = current
+        
+        let currentString = current
+        let maxString = high
+        
+        let currValue = Int(currentString) ?? 0
+        let maxValue = Int(maxString) ?? 0
+        
+        if (currValue == maxValue){
+            barWidth = maxWidth
+        }else{
+            barWidth = currValue % 100 + minWidth
+        }
+
+        marker.frame =  CGRect(x:barStartX, y: barStartY, width:barWidth, height: barHeight)
+        
+        
         //let a: Int = Int(currNum.text ?? "")!
         //if(a > 100){
         
@@ -121,6 +153,20 @@ class TemperatureViewController: UIViewController {
         /*var newFrame = self.marker.frame
         newFrame.size.height = 80
          */
+        
+        let currentString2 = current
+        let maxString2 = high
+        
+        let currValue2 = Int(currentString2) ?? 0
+        let maxValue2 = Int(maxString2) ?? 0
+        
+        if (currValue2 == maxValue2){
+            barWidth2 = maxWidth
+        }else{
+            barWidth2 = currValue2 % 100 + minWidth
+        }
+
+        marker2.frame =  CGRect(x:bar2StartX, y: bar2StartY, width:barWidth2, height: barHeight)
     }
     
 
