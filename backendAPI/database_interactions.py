@@ -24,7 +24,6 @@ conn = pymysql.connect(
 def insert_user(email, pwd, firstname=None, lastname=None):
     cur=conn.cursor()
     if check_email(email):
-        # TODO: handle this better within the api (frontend)
         #print("User already exists!")
         return -1
     now = datetime.datetime.now()
@@ -50,6 +49,13 @@ def get_user(email=None):
     user = cur.fetchall()
     return user
 
+# Get all information about a user based on their user_id
+def get_user_by_id(user_id):
+    cur=conn.cursor()
+    cur.execute("SELECT * FROM users WHERE user_id=%s", (user_id))
+    user = cur.fetchone()
+    return user
+
 # delete row from users table based on email
 def delete_user(email):
     cur = conn.cursor()
@@ -69,8 +75,6 @@ def login(email, pwd):
     if cur.fetchone()[0]:
         return get_user(email)[0][0]
     else:
-        # TODO: have a better way of handling this within the api (frontend)
-        #print("Incorrect username and/or password. Please try again.")
         return -1
 
 
@@ -108,24 +112,39 @@ def add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two,
         insert_data("current", m["timestamp"], m["value"], session_id)
 
 def get_total_voltages(session_id):
-    # TODO: uncomment when this table is implemented, test with the table (should work, but possible idk the syntax anymore)
-    # cur=conn.cursor()
-    # cur.execute("SELECT (voltage_tot, time_tot) FROM total_voltage WHERE session_id=%s", session_id)
-    # conn.commit()
-    return [
-    (random.choice([23.0, 23.55, 24, 24.05, 25, 25.8, 26.10, 26.5, 26.6, 26.9, 27, 27.11]),
-     idx)
-      for idx in range(135)]
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+
+    cur=conn_local.cursor()
+    cur.execute("SELECT value, time FROM voltage_total WHERE session_id=%s", session_id)
+    data = cur.fetchall()
+    return data
+    # return [
+    # (random.choice([23.0, 23.55, 24, 24.05, 25, 25.8, 26.10, 26.5, 26.6, 26.9, 27, 27.11]),
+    #  idx)
+    #   for idx in range(135)]
 
 def get_currents(session_id):
-    # TODO: uncomment when this table is implemented, test with the table (should work, but possible idk the syntax anymore)
-    # cur=conn.cursor()
-    # cur.execute("SELECT (voltage_tot, time_tot) FROM total_voltage WHERE session_id=%s", session_id)
-    # conn.commit()
-    return [
-    (random.choice([.001, .002, .0025, .003, .005, .01, .02, .033, .05, .075, .08, .1]),
-     idx)
-      for idx in range(13)]
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
+    cur.execute("SELECT value, time FROM current WHERE session_id=%s", session_id)
+    data = cur.fetchall()
+    return data
+    # return [
+    # (random.choice([.001, .002, .0025, .003, .005, .01, .02, .033, .05, .075, .08, .1]),
+    #  idx)
+    #   for idx in range(13)]
 
 
 
@@ -169,17 +188,17 @@ def insert_battery(user_id, max_capacity):
     cur=conn.cursor()
     cur.execute("INSERT INTO battery (user_id, max_capacity) VALUES (%s, %s)", (user_id, max_capacity))
     conn.commit()
-    cur.execute("SELECT battery_id WHERE user_id = %s order by battery_id desc ", (user_id))
+    cur.execute("SELECT battery_id FROM battery WHERE user_id=%s", (user_id))
     return cur.fetchone()
 
 # see batteries in the battery table, either all of them or a specific user's
-def get_batteries(user_id=None):
+def get_battery_id(user_id=None):
     cur=conn.cursor()
     if user_id is None:
         cur.execute("SELECT * FROM battery")
     else:
-        cur.execute("SELECT * FROM battery WHERE user_id=%s", (user_id))
-    batteries = cur.fetchall()
+        cur.execute("SELECT battery_id FROM battery WHERE user_id=%s", (user_id))
+    batteries = cur.fetchone()
     return batteries
 
 # delete row from battery table based on battery id
@@ -197,11 +216,12 @@ def delete_battery(battery_id):
 # create a new session in the database, and return session_id
 def create_new_session(battery_id, cur_capacity):
     cur=conn.cursor()
-    now = datetime.datetime.now()
+    now = datetime.now()
     cur.execute("INSERT INTO data_session (battery_id, session_start, cur_capacity) VALUES (%s, %s, %s)", (battery_id, now, cur_capacity))
     conn.commit()
-    cur.execute("SELECT session_id WHERE session_start = %s", (now))
-    return cur.fetchone()
+    cur.execute("SELECT session_id FROM data_session ORDER BY session_id DESC")
+    session_id, = cur.fetchone()
+    return session_id
 
 # see sessions in the data_session table, either all of them or ones for a specific battery
 def get_sessions(battery_id=None):

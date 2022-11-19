@@ -10,23 +10,39 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var firstName: UITextField!
+    @IBOutlet weak var lastName: UITextField!
     @IBOutlet weak var proPicView: UIImageView!
+    var newEmail: String = "..."
+    var newFirstName: String = "..."
+    var newLastName: String = "..."
+    var waitingForResponse: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         proPicView.layer.masksToBounds = true
         proPicView.layer.cornerRadius = proPicView.frame.height / 4
-        
+        waitingForResponse = BLEDemo.getUserData(callback_func: self.setUserData)
+        while (waitingForResponse) {
+            usleep(1000)
+        }
+        self.updateUIView()
         
     }
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-         }
-         */
+    
+    func updateUIView() {
+        self.firstName.text = self.newFirstName
+        self.lastName.text = self.newLastName
+        self.email.text = self.newEmail
+    }
+    
+    func setUserData(userData: [String: String]) {
+        self.newFirstName = userData["first_name"] ?? "..."
+        self.newLastName = userData["last_name"] ?? "..."
+        self.newEmail = userData["email"] ?? "..."
+        
+        self.waitingForResponse = false
+    }
 }

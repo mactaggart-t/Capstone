@@ -44,7 +44,6 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
 
     let task = session.dataTask(with: urlRequest) { data, response, error in
         guard let data = data else { return }
-        print(data)
         let trimmedString = String(data: data, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
         sessionID = trimmedString;
     }
@@ -189,7 +188,7 @@ func getBatteryPercentages(callback_func: @escaping (_: [[Double]]) -> ()) {
     task.resume()
 }
 
-// Get a list of 10 sample battery percentages from the current session
+// Get the most recent data (smoothed out) about this session (exits gracefully if there is no current session)
 func getMostRecentData(callback_func: @escaping (_: [String: Double]) -> ()) {
     if (sessionID == "") {
         return
@@ -223,3 +222,37 @@ func getMostRecentData(callback_func: @escaping (_: [String: Double]) -> ()) {
     task.resume()
 }
 
+// Gets the public user information for the currently signed in user (first/last name and email)
+func getUserData(callback_func: @escaping (_: [String: String]) -> ()) -> Bool {
+    if (userID == "") {
+        return false
+    }
+    let url = URL(string: urlBase + "userData?userID=" + userID)
+    
+    guard let requestUrl = url else { fatalError() }
+    // Create URL Request
+    var request = URLRequest(url: requestUrl)
+    // Specify HTTP Method to use
+    request.httpMethod = "GET"
+    request.setValue(userID, forHTTPHeaderField: "userID")
+    // Send HTTP Request
+    print("Getting user data from the backend...")
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        do {
+            let responseObject = try JSONDecoder().decode([String: String].self, from: data!)
+            callback_func(responseObject)
+        } catch {
+            print(error) // parsing error
+            
+            // Convert HTTP Response Data to a simple String
+            if (data != nil) {
+                print(type(of: data))
+                let trimmedString = String(data: data!, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
+                print(trimmedString)
+            }
+        }
+        
+    }
+    task.resume()
+    return true
+}

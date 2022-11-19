@@ -56,7 +56,7 @@ class BatteryPercentage(Resource):
         args_dict = args.to_dict()
         session_id = int(args_dict.get("sessionID"))
         all_voltages = get_total_voltages(session_id)
-        ten_spaced_elems_idx = np.round(np.linspace(0, len(all_voltages)-1, 10)).astype(int)
+        ten_spaced_elems_idx = np.round(np.linspace(0, len(all_voltages)-1, min(10, len(all_voltages)))).astype(int)
         ten_spaced_elems = [all_voltages[idx] for idx in ten_spaced_elems_idx]
         battery_percentages = []
         for voltage_time_pair in ten_spaced_elems:
@@ -82,17 +82,11 @@ class LoadRawData(Resource):
         session_id = data_dict.get('sessionID')
         user_id = data_dict.get('userID')
         if not session_id:
-            # battery_id = get_batteries(user_id)
-            # if not battery_id:
-            #     battery_capacity = 48
-            #     battery_id = insert_battery(user_id, battery_capacity)
-            # battery_id = get_batteries(user_id)[0]['battery_id']
-            cur_capacity = 48
-            # TODO: Replace with above code
-            battery_id = 10
-            # TODO: add back in
-            # session_id = create_new_session(battery_id, cur_capacity)
-            session_id = 1
+            cur_capacity = 28
+            battery_id = get_battery_id(user_id)
+            if not battery_id:
+                battery_id = insert_battery(user_id, cur_capacity)
+            session_id = create_new_session(battery_id, cur_capacity)
         add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two, voltage_one, voltage_two, current)
         return int(session_id)
 
@@ -102,11 +96,10 @@ class GeneralBatteryData(Resource):
         for elem in input_arr[-slice_size:]:
             elem_val, _ = elem
             smoothed_value += elem_val
-        return smoothed_value/slice_size
+        return smoothed_value/slice_size if slice_size != 0 else 0
 
-    def __get_battery_life_remaining(self, current):
-        # TODO: Fill in with formula from YouYou
-        return 100
+    def __get_battery_life_remaining(self, power):
+        return 256/power * 60 if power != 0 else 0
 
     def get(self):
         args = request.args
@@ -117,7 +110,7 @@ class GeneralBatteryData(Resource):
         smoothed_voltage = self.__smoothed_data(min(10, len(all_voltages)), all_voltages)
         smoothed_current = self.__smoothed_data(min(10, len(all_currents)), all_currents)
         power = smoothed_voltage * smoothed_current
-        battery_life_remaining = self.__get_battery_life_remaining(smoothed_current)
+        battery_life_remaining = self.__get_battery_life_remaining(smoothed_voltage)
         battery_percentage = get_battery_percentage(smoothed_voltage)
         return {
          "current_percentage": battery_percentage,
@@ -127,6 +120,20 @@ class GeneralBatteryData(Resource):
          "power": power,
          }
 
+class AccountData(Resource):
+    def get(self):
+        args = request.args
+        args_dict = args.to_dict()
+        user_id = int(args_dict.get("userID"))
+        user_info = get_user_by_id(user_id)
+        _, email, _, _, first_name, last_name = user_info
+        print(user_info)
+        return {
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email
+        }
+
 
 api.add_resource(Temperature, '/temperature')
 api.add_resource(LoadRawData, '/loadRawData')
@@ -134,3 +141,4 @@ api.add_resource(Login, '/login')
 api.add_resource(CreateAccount, '/createAccount')
 api.add_resource(BatteryPercentage, '/batteryPercentages')
 api.add_resource(GeneralBatteryData, '/mostRecentData')
+api.add_resource(AccountData, '/userData')
