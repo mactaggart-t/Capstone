@@ -16,10 +16,10 @@ class BatteryChartViewController: UIViewController {
     var yValues: [ChartDataEntry] = []
     
     lazy var lineChartView: LineChartView = {
-        let frame = CGRect(x: 0, y: 0, width: 340, height: 215)
+        let frame = CGRect(x: 0, y: 0, width: 323, height: 200)
         let chartView = LineChartView(frame: frame)
         //let chartView = LineChartView()
-        chartView.backgroundColor = .lightGray
+        chartView.backgroundColor = .systemGray5
         chartView.rightAxis.enabled = false
         let yAxis = chartView.leftAxis
         yAxis.labelFont = .boldSystemFont(ofSize: 8)
@@ -40,6 +40,15 @@ class BatteryChartViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.addSubview(lineChartView)
+        
+        let label = UILabel(frame: CGRect(x: 135, y: 202, width: 60, height: 10))
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.textAlignment = .center
+        label.text = "Time(mins)"
+        
+        view.addSubview(lineChartView)
+        view.addSubview(label)
         
         setData()
         startTimer()
