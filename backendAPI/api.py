@@ -96,8 +96,41 @@ class LoadRawData(Resource):
         add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two, voltage_one, voltage_two, current)
         return int(session_id)
 
+class GeneralBatteryData(Resource):
+    def __smoothed_data(self, slice_size, input_arr):
+        smoothed_value = 0
+        for elem in input_arr[-slice_size:]:
+            elem_val, _ = elem
+            smoothed_value += elem_val
+        return smoothed_value/slice_size
+
+    def __get_battery_life_remaining(self, current):
+        # TODO: Fill in with formula from YouYou
+        return 100
+
+    def get(self):
+        args = request.args
+        args_dict = args.to_dict()
+        session_id = int(args_dict.get("sessionID"))
+        all_voltages = get_total_voltages(session_id)
+        all_currents = get_currents(session_id)
+        smoothed_voltage = self.__smoothed_data(min(10, len(all_voltages)), all_voltages)
+        smoothed_current = self.__smoothed_data(min(10, len(all_currents)), all_currents)
+        power = smoothed_voltage * smoothed_current
+        battery_life_remaining = self.__get_battery_life_remaining(smoothed_current)
+        battery_percentage = get_battery_percentage(smoothed_voltage)
+        return {
+         "current_percentage": battery_percentage,
+         "total_voltage": smoothed_voltage,
+         "current": smoothed_current,
+         "battery_life": battery_life_remaining,
+         "power": power,
+         }
+
+
 api.add_resource(Temperature, '/temperature')
 api.add_resource(LoadRawData, '/loadRawData')
 api.add_resource(Login, '/login')
 api.add_resource(CreateAccount, '/createAccount')
 api.add_resource(BatteryPercentage, '/batteryPercentages')
+api.add_resource(GeneralBatteryData, '/mostRecentData')

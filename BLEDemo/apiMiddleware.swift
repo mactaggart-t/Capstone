@@ -156,9 +156,9 @@ func createAccount(username: String, password: String, firstName: String, lastNa
 
 
 // Get a list of 10 sample battery percentages from the current session
-func getBatteryPercentages(callback_func: @escaping (_: [[Double]]) -> ()) -> Bool {
+func getBatteryPercentages(callback_func: @escaping (_: [[Double]]) -> ()) {
     if (sessionID == "") {
-        return true
+        return
     }
     let url = URL(string: urlBase + "batteryPercentages?sessionID=" + sessionID)
     
@@ -187,5 +187,39 @@ func getBatteryPercentages(callback_func: @escaping (_: [[Double]]) -> ()) -> Bo
         
     }
     task.resume()
-    return false
 }
+
+// Get a list of 10 sample battery percentages from the current session
+func getMostRecentData(callback_func: @escaping (_: [String: Double]) -> ()) {
+    if (sessionID == "") {
+        return
+    }
+    let url = URL(string: urlBase + "mostRecentData?sessionID=" + sessionID)
+    
+    guard let requestUrl = url else { fatalError() }
+    // Create URL Request
+    var request = URLRequest(url: requestUrl)
+    // Specify HTTP Method to use
+    request.httpMethod = "GET"
+    request.setValue(sessionID, forHTTPHeaderField: "SessionID")
+    // Send HTTP Request
+    print("Getting most recent battery data from the backend...")
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        do {
+            let responseObject = try JSONDecoder().decode([String: Double].self, from: data!)
+            callback_func(responseObject)
+        } catch {
+            print(error) // parsing error
+            
+            // Convert HTTP Response Data to a simple String
+            if (data != nil) {
+                print(type(of: data))
+                let trimmedString = String(data: data!, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
+                print(trimmedString)
+            }
+        }
+        
+    }
+    task.resume()
+}
+

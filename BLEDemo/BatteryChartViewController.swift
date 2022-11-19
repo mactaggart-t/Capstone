@@ -13,20 +13,7 @@ import TinyConstraints
 
 class BatteryChartViewController: UIViewController {
     private var timer: DispatchSourceTimer?
-    var dataUpdated: Bool = false
-    var yValues: [ChartDataEntry] = [
-        ChartDataEntry(x:0.0, y:10.0),
-        ChartDataEntry(x:1, y:11.0),
-        ChartDataEntry(x:2, y:12.0),
-        ChartDataEntry(x:3, y:12.5),
-        ChartDataEntry(x:4, y:13.0),
-        ChartDataEntry(x:5, y:14.0),
-        ChartDataEntry(x:6, y:5),
-        ChartDataEntry(x:7, y:20),
-        ChartDataEntry(x:8, y:30),
-        ChartDataEntry(x:9, y:9),
-        ChartDataEntry(x:10, y:15)
-    ]
+    var yValues: [ChartDataEntry] = []
 
     lazy var lineChartView: LineChartView = {
         let frame = CGRect(x: 0, y: 0, width: 340, height: 215)
@@ -88,7 +75,7 @@ class BatteryChartViewController: UIViewController {
     }
     
     func getBatteryPercentagesAndUpdateChart() {
-        self.dataUpdated = BLEDemo.getBatteryPercentages(callback_func: self.updateChart)
+        BLEDemo.getBatteryPercentages(callback_func: self.updateChart)
     }
     
     func updateChart(xyPairs: [[Double]]) {
@@ -101,7 +88,6 @@ class BatteryChartViewController: UIViewController {
             tempYValues.append(ChartDataEntry(x: pair[1], y: pair[0]))
         }
         yValues = tempYValues
-        self.dataUpdated = true
         self.setData()
     }
     

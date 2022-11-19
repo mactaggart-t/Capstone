@@ -117,6 +117,17 @@ def get_total_voltages(session_id):
      idx)
       for idx in range(135)]
 
+def get_currents(session_id):
+    # TODO: uncomment when this table is implemented, test with the table (should work, but possible idk the syntax anymore)
+    # cur=conn.cursor()
+    # cur.execute("SELECT (voltage_tot, time_tot) FROM total_voltage WHERE session_id=%s", session_id)
+    # conn.commit()
+    return [
+    (random.choice([.001, .002, .0025, .003, .005, .01, .02, .033, .05, .075, .08, .1]),
+     idx)
+      for idx in range(13)]
+
+
 
 # insert query into voltage table for totalVoltage
 def insert_voltage1(time, data, session_id):

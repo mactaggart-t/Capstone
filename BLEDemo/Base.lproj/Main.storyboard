@@ -34,20 +34,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6x-FV-jIB">
-                                <rect key="frame" x="158" y="119" width="58" height="28"/>
+                                <rect key="frame" x="33" y="119" width="313" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="DATA">
+                                    <fragment content="...">
                                         <attributes>
                                             <color key="NSColor" red="0.043137254899999998" green="0.30980392159999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v98-xZ-XnL">
-                                <rect key="frame" x="23" y="219" width="324" height="213"/>
+                                <rect key="frame" x="23" y="218" width="323" height="212"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="cHy-HC-qg4" kind="embed" id="ppU-ly-qjr"/>
@@ -65,7 +66,7 @@
                                 </connections>
                             </segmentedControl>
                             <containerView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EKc-8c-oLP">
-                                <rect key="frame" x="23" y="219" width="324" height="213"/>
+                                <rect key="frame" x="23" y="218" width="323" height="212"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="hPG-Ol-7Ja" kind="embed" id="85N-hy-DQc"/>
@@ -159,65 +160,70 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fU-KJ-yBF">
-                                <rect key="frame" x="74" y="541" width="69" height="14"/>
+                                <rect key="frame" x="42" y="541" width="127" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Total Voltage">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" metaFont="cellTitle"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEa-Tf-tsm">
-                                <rect key="frame" x="79" y="486" width="59" height="28"/>
+                                <rect key="frame" x="33" y="486" width="150" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Label">
+                                    <fragment content="...">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" metaFont="system" size="24"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ud-KJ-qOa">
-                                <rect key="frame" x="237" y="486" width="59" height="28"/>
+                                <rect key="frame" x="191" y="486" width="150" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Label">
+                                    <fragment content="...">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnb-sJ-h9k">
-                                <rect key="frame" x="79" y="609" width="59" height="28"/>
+                                <rect key="frame" x="33" y="609" width="150" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Label">
+                                    <fragment content="...">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" metaFont="system" size="24"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Awn-29-4fP">
-                                <rect key="frame" x="237" y="609" width="59" height="28"/>
+                                <rect key="frame" x="191" y="609" width="150" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Label">
+                                    <fragment content="...">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -243,11 +249,12 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="jgs-uw-3QO"/>
                     <connections>
+                        <outlet property="batteryLifeLabel" destination="tnb-sJ-h9k" id="F7Y-5p-Tst"/>
                         <outlet property="batteryVC" destination="v98-xZ-XnL" id="1IO-x5-3HP"/>
                         <outlet property="currentBox" destination="HLk-BF-s99" id="psr-a3-jQl"/>
                         <outlet property="currentLabel" destination="1Ud-KJ-qOa" id="ebV-Va-wl3"/>
-                        <outlet property="temp1Label" destination="tnb-sJ-h9k" id="6jf-Kf-s6Z"/>
-                        <outlet property="temp2Label" destination="Awn-29-4fP" id="4o9-VL-GZT"/>
+                        <outlet property="currentPercentage" destination="U6x-FV-jIB" id="KIN-YV-iM5"/>
+                        <outlet property="powerLabel" destination="Awn-29-4fP" id="6dq-4P-seJ"/>
                         <outlet property="tempBox1" destination="C8x-Mq-V9z" id="lCx-F7-g0r"/>
                         <outlet property="tempBox2" destination="zwP-s4-37r" id="7hR-R6-lgB"/>
                         <outlet property="temperatureVC" destination="EKc-8c-oLP" id="ByW-4Y-UKM"/>
@@ -258,14 +265,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wUz-kK-x5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1020" y="204.739336492891"/>
+            <point key="canvasLocation" x="1020" y="204.67980295566502"/>
         </scene>
         <!--Scan-->
         <scene sceneID="oYz-Hf-bmk">
             <objects>
                 <tableViewController id="XZM-Me-sXn" customClass="ScanTableViewController" customModule="BLEDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="x85-ue-dlL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="755"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="wYi-s2-8Gw">
@@ -719,7 +726,7 @@
                         <viewControllerLayoutGuide type="bottom" id="yaO-wX-RsL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NYc-8u-7gB">
-                        <rect key="frame" x="0.0" y="0.0" width="324" height="213"/>
+                        <rect key="frame" x="0.0" y="0.0" width="323" height="212"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.043137254899999998" green="0.30980392159999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -738,7 +745,7 @@
                         <viewControllerLayoutGuide type="bottom" id="cBM-RH-uo1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WhH-O3-Kxq">
-                        <rect key="frame" x="0.0" y="0.0" width="324" height="213"/>
+                        <rect key="frame" x="0.0" y="0.0" width="323" height="212"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4kp-Lu-1un">
@@ -875,7 +882,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="F3s-dZ-pCT"/>
+        <segue reference="gj8-TH-9Lz"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="battery.100" catalog="system" width="128" height="59"/>
