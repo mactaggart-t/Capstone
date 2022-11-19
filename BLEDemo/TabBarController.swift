@@ -58,10 +58,6 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
 
             self?.sendData()
             
-
-            DispatchQueue.main.async {
-                self?.resetCaches();
-            }
         }
         timer!.resume()
     }
@@ -89,17 +85,15 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
                                      currentCache: currentCache,
                                      temperatureOneCache: temperatureCache,
                                      temperatureTwoCache: temperatureTwoCache)
+        self.resetCaches()
     }
     
     // Cache and sort the raw data from the BLE device and add the current timestamp
     func cacheData(dataString: String) throws {
-        print(dataString)
         let splitString = dataString.split(separator: ":")
         let type = splitString[0]
         let data = splitString[1]
         let timestamp = NSDate().timeIntervalSince1970
-        print("-------Printing Type-------")
-        print(type)
         switch type {
         case battery1ID:
             voltageOneCache.append(["value": String(data), "timestamp": String(timestamp)]);
@@ -117,7 +111,6 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
             temperatureCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         case temperatureTwoID:
-            print("got here")
             temperatureTwoCache.append(["value": String(data), "timestamp": String(timestamp)]);
             break;
         default:

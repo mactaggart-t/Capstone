@@ -96,20 +96,26 @@ def insert_data(table, time, value, session_id):
    cur.execute("INSERT INTO " + table + " (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, value))
    conn.commit()
 
+
+def get_time_since_start(current_time, start_time):
+    return datetime.fromtimestamp(float(current_time)) - start_time
+
+
 # Main insert data function
 def add_raw_data_to(session_id, total_voltage, temperature_one, temperature_two, voltage_one, voltage_two, current):
+    start_time = get_start_time(session_id)
     for h in total_voltage:
-        insert_data("voltage_total", h["timestamp"], h["value"], session_id)
+        insert_data("voltage_total", get_time_since_start(h["timestamp"], start_time), h["value"], session_id)
     for i in temperature_one:
-        insert_data("temperature1", i["timestamp"], i["value"], session_id)
+        insert_data("temperature1", get_time_since_start(i["timestamp"], start_time), i["value"], session_id)
     for j in temperature_two:
-        insert_data("temperature2", j["timestamp"], j["value"], session_id)
+        insert_data("temperature2", get_time_since_start(j["timestamp"], start_time), j["value"], session_id)
     for k in voltage_one:
-        insert_data("voltage1", k["timestamp"], k["value"], session_id)
+        insert_data("voltage1", get_time_since_start(k["timestamp"], start_time), k["value"], session_id)
     for l in voltage_two:
-        insert_data("voltage2", l["timestamp"], l["value"], session_id)
+        insert_data("voltage2", get_time_since_start(l["timestamp"], start_time), l["value"], session_id)
     for m in current:
-        insert_data("current", m["timestamp"], m["value"], session_id)
+        insert_data("current", get_time_since_start(m["timestamp"], start_time), m["value"], session_id)
 
 def get_total_voltages(session_id):
     conn_local = pymysql.connect(
@@ -238,6 +244,12 @@ def delete_session(session_id):
     cur=conn.cursor()
     cur.execute("DELETE FROM data_session WHERE session_id=%s", (session_id))
     conn.commit()
+
+def get_start_time(session_id):
+    cur=conn.cursor()
+    cur.execute("SELECT session_start FROM data_session WHERE session_id=%s", (session_id))
+    data, = cur.fetchone()
+    return data
 
 
 "_______________________________________________________________"

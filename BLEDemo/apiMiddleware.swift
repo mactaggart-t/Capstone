@@ -8,7 +8,7 @@
 
 import Foundation
 
-let urlBase = "http://10.110.254.205:5000/"
+let urlBase = "http://10.110.142.62:5000/"
 var sessionID = ""
 var userID = ""
 
@@ -246,7 +246,6 @@ func getUserData(callback_func: @escaping (_: [String: String]) -> ()) -> Bool {
             
             // Convert HTTP Response Data to a simple String
             if (data != nil) {
-                print(type(of: data))
                 let trimmedString = String(data: data!, encoding: .utf8)!.components(separatedBy: .whitespacesAndNewlines).joined()
                 print(trimmedString)
             }

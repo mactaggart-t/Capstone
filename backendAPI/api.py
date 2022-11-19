@@ -62,7 +62,7 @@ class BatteryPercentage(Resource):
         for voltage_time_pair in ten_spaced_elems:
             voltage, timestamp = voltage_time_pair
             battery_percentages.append((get_battery_percentage(voltage),
-             timestamp))
+             timestamp.seconds/60))
         return battery_percentages
 
 
@@ -98,8 +98,8 @@ class GeneralBatteryData(Resource):
             smoothed_value += elem_val
         return smoothed_value/slice_size if slice_size != 0 else 0
 
-    def __get_battery_life_remaining(self, power):
-        return 256/power * 60 if power != 0 else 0
+    def __get_battery_life_remaining(self, current, current_percentage):
+        return (current_percentage / 100) * (20 / current) * 60 if current != 0 else 0
 
     def get(self):
         args = request.args
@@ -110,8 +110,8 @@ class GeneralBatteryData(Resource):
         smoothed_voltage = self.__smoothed_data(min(10, len(all_voltages)), all_voltages)
         smoothed_current = self.__smoothed_data(min(10, len(all_currents)), all_currents)
         power = smoothed_voltage * smoothed_current
-        battery_life_remaining = self.__get_battery_life_remaining(smoothed_voltage)
         battery_percentage = get_battery_percentage(smoothed_voltage)
+        battery_life_remaining = self.__get_battery_life_remaining(smoothed_current, battery_percentage)
         return {
          "current_percentage": battery_percentage,
          "total_voltage": smoothed_voltage,
@@ -127,7 +127,6 @@ class AccountData(Resource):
         user_id = int(args_dict.get("userID"))
         user_info = get_user_by_id(user_id)
         _, email, _, _, first_name, last_name = user_info
-        print(user_info)
         return {
         "first_name": first_name,
         "last_name": last_name,
