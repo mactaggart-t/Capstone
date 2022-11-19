@@ -72,7 +72,6 @@ class MainViewController: UIViewController {
     }
     
     func updateAllDataLabels(newDataDict: [String: Double]) {
-        print(newDataDict)
         self.currentPercentage.text = String(format: "%.2f", newDataDict["current_percentage"]!) + "%"
         self.voltageLabel.text = String(format: "%.2f", newDataDict["total_voltage"]!) + "V"
         self.currentLabel.text = String(format: "%.2f", newDataDict["current"]!) + "A"
