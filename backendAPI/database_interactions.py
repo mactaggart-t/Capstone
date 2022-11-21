@@ -40,6 +40,7 @@ def insert_user(email, pwd, firstname=None, lastname=None):
     return cur.fetchone()[0]
 
 # see all users in the user table or a specific user based on their email
+# TODO: split up and rename this function to be better
 def get_user(email=None):
     cur=conn.cursor()
     if email is None:
@@ -57,6 +58,7 @@ def get_user_by_id(user_id):
     return user
 
 # delete row from users table based on email
+# TODO: rename this function to be better
 def delete_user(email):
     cur = conn.cursor()
     cur.execute("DELETE FROM users WHERE email=%s", (email))
@@ -167,6 +169,13 @@ def get_table_data(table):
     data = cur.fetchall()
     return data
 
+# get a specific row of a table based on its entry id
+def get_table_by_id(table, entry_id):
+    cur=conn.cursor()
+    cur.execute("SELECT * FROM " + table + " WHERE entry_id=%s", (entry_id))
+    data = cur.fetchone()
+    return data
+
 # read user's session data from table
 def get_user_data(table, session_id, num = -1):
    cur=conn.cursor()
@@ -177,7 +186,14 @@ def get_user_data(table, session_id, num = -1):
       data = cur.fetchall()
    return data
 
+# delete a row from a table based on its entry id
+def delete_data_by_id(table, entry_id):
+    cur=conn.cursor()
+    cur.execute("DELETE FROM " + table + " WHERE entry_id=%s", (entry_id))
+    conn.commit()
+
 # delete rows from a table based on session id
+# TODO: rename this function to be better
 def delete_data(table, session_id):
     cur = conn.cursor()
     cur.execute("DELETE FROM " + table + " WHERE session_id=%s", (session_id))
@@ -198,16 +214,25 @@ def insert_battery(user_id, max_capacity):
     return cur.fetchone()
 
 # see batteries in the battery table, either all of them or a specific user's
+# TODO: split up and rename this function to be better
 def get_battery_id(user_id=None):
     cur=conn.cursor()
     if user_id is None:
         cur.execute("SELECT * FROM battery")
     else:
-        cur.execute("SELECT battery_id FROM battery WHERE user_id=%s", (user_id))
-    batteries = cur.fetchone()
+        cur.execute("SELECT * FROM battery WHERE user_id=%s", (user_id))
+    batteries = cur.fetchall()
     return batteries
 
+# get battery based on a given battery id
+def get_battery_by_id(battery_id):
+    cur=conn.cursor()
+    cur.execute("SELECT * FROM battery WHERE battery_id=%s", (battery_id))
+    battery = cur.fetchone()
+    return battery
+
 # delete row from battery table based on battery id
+# TODO: rename this function to be better
 def delete_battery(battery_id):
     cur=conn.cursor()
     cur.execute("DELETE FROM battery WHERE battery_id=%s", (battery_id))
@@ -230,6 +255,7 @@ def create_new_session(battery_id, cur_capacity):
     return session_id
 
 # see sessions in the data_session table, either all of them or ones for a specific battery
+# TODO: split up and rename this function to be better
 def get_sessions(battery_id=None):
     cur=conn.cursor()
     if battery_id is None:
@@ -239,7 +265,15 @@ def get_sessions(battery_id=None):
     sessions = cur.fetchall()
     return sessions
 
+# get session based on a given session id
+def get_session_by_id(session_id):
+    cur=conn.cursor()
+    cur.execute("SELECT * FROM data_session WHERE session_id=%s", (session_id))
+    session = cur.fetchone()
+    return session
+
 # delete row from data_session table based on session id
+# TODO: rename this function to be better
 def delete_session(session_id):
     cur=conn.cursor()
     cur.execute("DELETE FROM data_session WHERE session_id=%s", (session_id))
@@ -248,8 +282,8 @@ def delete_session(session_id):
 def get_start_time(session_id):
     cur=conn.cursor()
     cur.execute("SELECT session_start FROM data_session WHERE session_id=%s", (session_id))
-    data, = cur.fetchone()
-    return data
+    start = cur.fetchone()
+    return start
 
 
 "_______________________________________________________________"
@@ -261,7 +295,7 @@ def get_start_time(session_id):
 def get_current_temp(session_id):
     try:
         cur=conn.cursor()
-        # TODO Which current temp? temp1 or temp2? I could try joining the tables and picking the most recent of them both I suppose?
+        # TODO: Which current temp? temp1 or temp2? I could try joining the tables and picking the most recent of them both I suppose?
         cur.execute("""SELECT value from temperature1 WHERE session_id=%s
                        UNION ALL
                        SELECT value from temperature2 WHERE session_id=%s
