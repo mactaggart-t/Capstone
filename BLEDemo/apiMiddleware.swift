@@ -8,7 +8,7 @@
 
 import Foundation
 
-let urlBase = "http://10.110.254.205:5000/"
+let urlBase = "http://10.0.1.144:5000/"
 var sessionID = ""
 var userID = ""
 
@@ -53,7 +53,8 @@ func sendData(totVoltageCache: [Dictionary<String, String>],
 
 
 // Get the current temperature, max session temperature, and min session temperature from the backend
-func getTemperatureData(callback_func: @escaping (_: String, _: String, _: String) -> ()) {
+func getTemperatureData(callback_func: @escaping (_: String, _: String, _: String) -> (),
+                        callback_func_2: @escaping (_: String, _: String, _: String) -> ()) {
     if (sessionID == "") {
         return
     }
@@ -69,14 +70,19 @@ func getTemperatureData(callback_func: @escaping (_: String, _: String, _: Strin
     print("Getting temperature from the backend...")
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         // Convert HTTP Response Data to a simple String
-        var dataDict = ["current_temp": 100.0, "min_ride_temp": 0.0, "max_ride_temp": 200.0]
+        var dataDict = ["current_temp_1": 100.0, "current_temp_2": 100.0,
+                        "min_temp_1": 50.0, "min_temp_2": 50.0,
+                        "max_temp_1": 200.0, "max_temp_2": 200.0]
         do {
             dataDict = (try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Double])!;
         } catch {
             print("Unable to convert to dictionary")
         }
-        if (dataDict["min_ride_temp"] != nil && dataDict["max_ride_temp"] != nil && dataDict["current_temp"] != nil) {
-            callback_func(String(dataDict["min_ride_temp"]!), String(dataDict["current_temp"]!), String(dataDict["max_ride_temp"]!))
+        if (dataDict["min_temp_1"] != nil && dataDict["max_temp_1"] != nil && dataDict["current_temp_1"] != nil) {
+            callback_func(String(dataDict["min_temp_1"]!), String(dataDict["current_temp_1"]!), String(dataDict["max_temp_1"]!))
+        }
+        if (dataDict["min_temp_2"] != nil && dataDict["max_temp_2"] != nil && dataDict["current_temp_2"] != nil) {
+            callback_func_2(String(dataDict["min_temp_2"]!), String(dataDict["current_temp_2"]!), String(dataDict["max_temp_2"]!))
         }
     }
     task.resume()

@@ -5,6 +5,10 @@ import pymysql
 import random
 from datetime import datetime, timedelta
 
+DEFAULT_MAX_TEMP = 200
+DEFAULT_CURR_TEMP = 100
+DEFAULT_MIN_TEMP = 50
+
 # Establish a conection with the database
 conn = pymysql.connect(
         host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
@@ -220,7 +224,9 @@ def get_battery_id(user_id=None):
     if user_id is None:
         cur.execute("SELECT * FROM battery")
     else:
-        cur.execute("SELECT * FROM battery WHERE user_id=%s", (user_id))
+        cur.execute("SELECT battery_id FROM battery WHERE user_id=%s", (user_id))
+        battery_id = cur.fetchone()
+        return battery_id
     batteries = cur.fetchall()
     return batteries
 
@@ -293,49 +299,39 @@ def get_start_time(session_id):
 
 # get the current temperature for the given session_id (take mean or median of up to previous 30 entries)
 def get_current_temp(session_id):
-    try:
-        cur=conn.cursor()
-        # TODO: Which current temp? temp1 or temp2? I could try joining the tables and picking the most recent of them both I suppose?
-        cur.execute("""SELECT value from temperature1 WHERE session_id=%s
-                       UNION ALL
-                       SELECT value from temperature2 WHERE session_id=%s
-                       order by time desc""", (session_id, session_id))
-        data = cur.fetchone()
-        return data
-    except InterfaceError:
-        return 100.4
+    cur=conn.cursor()
+    cur.execute("""SELECT value from temperature1 WHERE session_id=%s""", (session_id))
+    temp1 = cur.fetchone()
+    cur.execute("""SELECT value from temperature2 WHERE session_id=%s""", (session_id))
+    temp2 = cur.fetchone()
+    temp_dict = {}
+    temp_dict["current_temp_1"] = DEFAULT_CURR_TEMP if temp1 == None else temp1
+    temp_dict["current_temp_2"] = DEFAULT_CURR_TEMP if temp2 == None else temp2
+    return temp_dict
 
 # get the peak temperature recorded during the given session_id
 def get_max_ride_temp(session_id):
-   try:
-       cur=conn.cursor()
-       cur.execute("SELECT value FROM temperature1 WHERE session_id=%s order by value desc", (session_id))
-       data = cur.fetchone()
-       cur.execute("SELECT value FROM temperature2 WHERE session_id=%s order by value desc", (session_id))
-       temp = cur.fetchone()
-       if temp == None:
-        return data if data != None else 130.4
-       if temp > data:
-          return temp
-       return data
-   except InterfaceError:
-       return 130.4
+   cur=conn.cursor()
+   cur.execute("SELECT value FROM temperature1 WHERE session_id=%s order by value desc", (session_id))
+   temp1 = cur.fetchone()
+   cur.execute("SELECT value FROM temperature2 WHERE session_id=%s order by value desc", (session_id))
+   temp2 = cur.fetchone()
+   temp_dict = {}
+   temp_dict["max_temp_1"] = DEFAULT_MAX_TEMP if temp1 == None else temp1
+   temp_dict["max_temp_2"] = DEFAULT_MAX_TEMP if temp2 == None else temp2
+   return temp_dict
 
 # get the minimum temperature recorded during the given session_id
 def get_min_ride_temp(session_id):
-    try:
-        cur=conn.cursor()
-        cur.execute("SELECT value FROM temperature1 WHERE session_id=%s order by value asc", (session_id))
-        data = cur.fetchone()
-        cur.execute("SELECT value FROM temperature2 WHERE session_id=%s order by value asc", (session_id))
-        temp = cur.fetchone()
-        if temp == None:
-         return data if data != None else 91.55
-        if temp < data:
-           return temp
-        return data
-    except InterfaceError:
-        return 91.55
+    cur=conn.cursor()
+    cur.execute("SELECT value FROM temperature1 WHERE session_id=%s order by value asc", (session_id))
+    temp1 = cur.fetchone()
+    cur.execute("SELECT value FROM temperature2 WHERE session_id=%s order by value asc", (session_id))
+    temp2 = cur.fetchone()
+    temp_dict = {}
+    temp_dict["min_temp_1"] = DEFAULT_MIN_TEMP if temp1 == None else temp1
+    temp_dict["min_temp_2"] = DEFAULT_MIN_TEMP if temp2 == None else temp2
+    return temp_dict
 
 
 # provides battery_id from user_id (needs to be changed in the future to support multiple batteries)

@@ -35,7 +35,6 @@ class TemperatureViewController: UIViewController {
     var currentTemp2: String = ""
     var highTemp1: String = ""
     var highTemp2: String = ""
-    var tempUpdated: Bool = false
    
     var minWidth: Int = 10
     var maxWidth: Int = 110
@@ -78,6 +77,11 @@ class TemperatureViewController: UIViewController {
         timer!.setEventHandler { [weak self] in
 
             self?.getTempData();
+            DispatchQueue.main.async {
+                // qos' default value is ´DispatchQoS.QoSClass.default`
+                self?.setSize1(low: self?.lowTemp1 ?? "50", current: self?.currentTemp1 ?? "100", high: self?.highTemp1 ?? "200")
+                self?.setSize2(low: self?.lowTemp2 ?? "50", current: self?.currentTemp2 ?? "100", high: self?.highTemp2 ?? "200")
+            }
         }
         timer!.resume()
     }
@@ -86,23 +90,16 @@ class TemperatureViewController: UIViewController {
         lowTemp1 = lowest
         currentTemp1 = current
         highTemp1 = highest
+    }
+    
+    func useTempData2(lowest: String, current: String, highest: String) {
         lowTemp2 = lowest
         currentTemp2 = current
         highTemp2 = highest
-        tempUpdated = true
     }
     
     func getTempData() {
-        tempUpdated = false
-        BLEDemo.getTemperatureData(callback_func: useTempData);
-        while (!self.tempUpdated) {
-            usleep(1000)
-        }
-        
-        
-        
-        setSize1(low: lowTemp1, current: currentTemp1, high: highTemp1)
-        setSize2(low: lowTemp2, current: currentTemp2, high: highTemp2)
+        BLEDemo.getTemperatureData(callback_func: useTempData, callback_func_2: useTempData2);
     }
     
     func setSize1(low: String, current: String, high: String){

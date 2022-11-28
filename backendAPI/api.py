@@ -45,9 +45,7 @@ class Temperature(Resource):
         current_temp = get_current_temp(session_id)
         max_ride_temp = get_max_ride_temp(session_id)
         min_ride_temp = get_min_ride_temp(session_id)
-        return {"current_temp": current_temp,
-                "max_ride_temp": max_ride_temp,
-                "min_ride_temp": min_ride_temp}
+        return {**current_temp, **max_ride_temp, **min_ride_temp}
 
 
 class BatteryPercentage(Resource):

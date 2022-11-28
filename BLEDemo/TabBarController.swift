@@ -69,6 +69,7 @@ class TabBarController: UITabBarController, CBCentralManagerDelegate, CBPeripher
         voltageTwoCache = []
         currentCache = []
         temperatureCache = []
+        temperatureTwoCache = []
     }
 
     // Stop the timer (stop sending data)
