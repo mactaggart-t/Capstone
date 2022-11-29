@@ -46,7 +46,14 @@ def insert_user(email, pwd, firstname=None, lastname=None):
 # see all users in the user table or a specific user based on their email
 # TODO: split up and rename this function to be better
 def get_user(email=None):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     if email is None:
         cur.execute("SELECT * FROM users")
     else:
@@ -56,7 +63,14 @@ def get_user(email=None):
 
 # Get all information about a user based on their user_id
 def get_user_by_id(user_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT * FROM users WHERE user_id=%s", (user_id))
     user = cur.fetchone()
     return user
@@ -64,19 +78,40 @@ def get_user_by_id(user_id):
 # delete row from users table based on email
 # TODO: rename this function to be better
 def delete_user(email):
-    cur = conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur = conn_local.cursor()
     cur.execute("DELETE FROM users WHERE email=%s", (email))
     conn.commit()
 
 # Check if email already exists, returns 1 if true and 0 if false
 def check_email(email):
-    cur = conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur = conn_local.cursor()
     cur.execute("SELECT EXISTS(SELECT * FROM users WHERE email=%s)", (email))
     return cur.fetchone()[0]
 
 # Handle logging in, return user_id if successful
 def login(email, pwd):
-    cur = conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+    )
+    cur = conn_local.cursor()
     cur.execute("SELECT EXISTS(SELECT * FROM users WHERE email=%s AND pwd=%s)", (email, pwd))
     if cur.fetchone()[0]:
         return get_user(email)[0][0]
@@ -98,9 +133,16 @@ def login(email, pwd):
 # voltage2
 # voltage_total
 def insert_data(table, time, value, session_id):
-   cur=conn.cursor()
-   cur.execute("INSERT INTO " + table + " (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, value))
-   conn.commit()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
+    cur.execute("INSERT INTO " + table + " (session_id, time, value) VALUES (%s, %s, %s)", (session_id, time, value))
+    conn_local.commit()
 
 
 def get_time_since_start(current_time, start_time):
@@ -162,46 +204,88 @@ def get_currents(session_id):
 
 # insert query into voltage table for totalVoltage
 def insert_voltage1(time, data, session_id):
-   cur=conn.cursor()
-   cur.execute("INSERT INTO voltage (session_id, time1, voltage1) VALUES (%s, %s, %s)", (session_id, time, data))
-   conn.commit()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
+    cur.execute("INSERT INTO voltage (session_id, time1, voltage1) VALUES (%s, %s, %s)", (session_id, time, data))
+    conn_local.commit()
 
 # read the data from a table
 def get_table_data(table):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT * FROM " + table)
     data = cur.fetchall()
     return data
 
 # get a specific row of a table based on its entry id
 def get_table_by_id(table, entry_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT * FROM " + table + " WHERE entry_id=%s", (entry_id))
     data = cur.fetchone()
     return data
 
 # read user's session data from table
 def get_user_data(table, session_id, num = -1):
-   cur=conn.cursor()
-   cur.execute("SELECT session_id, time, value FROM " + table + " WHERE session_id=%s order by time desc", (session_id))
-   if (num > -1):
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
+    cur.execute("SELECT session_id, time, value FROM " + table + " WHERE session_id=%s order by time desc", (session_id))
+    if (num > -1):
       data = cur.fetchmany(size = num)
-   else:
+    else:
       data = cur.fetchall()
-   return data
+    return data
 
 # delete a row from a table based on its entry id
 def delete_data_by_id(table, entry_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+        host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+        port = 3306,
+        user = 'admin',
+        password = 'ChuckGroup3!',
+        db = 'default_app',
+    )
+    cur=conn_local.cursor()
     cur.execute("DELETE FROM " + table + " WHERE entry_id=%s", (entry_id))
     conn.commit()
 
 # delete rows from a table based on session id
 # TODO: rename this function to be better
 def delete_data(table, session_id):
-    cur = conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur = conn_local.cursor()
     cur.execute("DELETE FROM " + table + " WHERE session_id=%s", (session_id))
-    conn.commit()
+    conn_local.commit()
 
 
 "_____________________________________________________________"
@@ -211,16 +295,30 @@ def delete_data(table, session_id):
 
 # insert battery data into battery table, and return inserted battery id
 def insert_battery(user_id, max_capacity):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("INSERT INTO battery (user_id, max_capacity) VALUES (%s, %s)", (user_id, max_capacity))
-    conn.commit()
+    conn_local.commit()
     cur.execute("SELECT battery_id FROM battery WHERE user_id=%s", (user_id))
     return cur.fetchone()
 
 # see batteries in the battery table, either all of them or a specific user's
 # TODO: split up and rename this function to be better
 def get_battery_id(user_id=None):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     if user_id is None:
         cur.execute("SELECT * FROM battery")
     else:
@@ -232,7 +330,14 @@ def get_battery_id(user_id=None):
 
 # get battery based on a given battery id
 def get_battery_by_id(battery_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT * FROM battery WHERE battery_id=%s", (battery_id))
     battery = cur.fetchone()
     return battery
@@ -240,9 +345,16 @@ def get_battery_by_id(battery_id):
 # delete row from battery table based on battery id
 # TODO: rename this function to be better
 def delete_battery(battery_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("DELETE FROM battery WHERE battery_id=%s", (battery_id))
-    conn.commit()
+    conn_local.commit()
 
 
 "_____________________________________________________________"
@@ -252,10 +364,17 @@ def delete_battery(battery_id):
 
 # create a new session in the database, and return session_id
 def create_new_session(battery_id, cur_capacity):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     now = datetime.now()
     cur.execute("INSERT INTO data_session (battery_id, session_start, cur_capacity) VALUES (%s, %s, %s)", (battery_id, now, cur_capacity))
-    conn.commit()
+    conn_local.commit()
     cur.execute("SELECT session_id FROM data_session ORDER BY session_id DESC")
     session_id, = cur.fetchone()
     return session_id
@@ -263,7 +382,14 @@ def create_new_session(battery_id, cur_capacity):
 # see sessions in the data_session table, either all of them or ones for a specific battery
 # TODO: split up and rename this function to be better
 def get_sessions(battery_id=None):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     if battery_id is None:
         cur.execute("SELECT * FROM data_session")
     else:
@@ -273,7 +399,14 @@ def get_sessions(battery_id=None):
 
 # get session based on a given session id
 def get_session_by_id(session_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT * FROM data_session WHERE session_id=%s", (session_id))
     session = cur.fetchone()
     return session
@@ -281,14 +414,29 @@ def get_session_by_id(session_id):
 # delete row from data_session table based on session id
 # TODO: rename this function to be better
 def delete_session(session_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("DELETE FROM data_session WHERE session_id=%s", (session_id))
     conn.commit()
 
 def get_start_time(session_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT session_start FROM data_session WHERE session_id=%s", (session_id))
-    start = cur.fetchone()
+    start = cur.fetchone()[0]
+    print("start time: ", start)
     return start
 
 
@@ -299,44 +447,72 @@ def get_start_time(session_id):
 
 # get the current temperature for the given session_id (take mean or median of up to previous 30 entries)
 def get_current_temp(session_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("""SELECT value from temperature1 WHERE session_id=%s""", (session_id))
     temp1 = cur.fetchone()
     cur.execute("""SELECT value from temperature2 WHERE session_id=%s""", (session_id))
     temp2 = cur.fetchone()
     temp_dict = {}
-    temp_dict["current_temp_1"] = DEFAULT_CURR_TEMP if temp1 == None else temp1
-    temp_dict["current_temp_2"] = DEFAULT_CURR_TEMP if temp2 == None else temp2
+    temp_dict["current_temp_1"] = DEFAULT_CURR_TEMP if temp1 == None else temp1[0]
+    temp_dict["current_temp_2"] = DEFAULT_CURR_TEMP if temp2 == None else temp2[0]
     return temp_dict
 
 # get the peak temperature recorded during the given session_id
 def get_max_ride_temp(session_id):
-   cur=conn.cursor()
-   cur.execute("SELECT value FROM temperature1 WHERE session_id=%s order by value desc", (session_id))
-   temp1 = cur.fetchone()
-   cur.execute("SELECT value FROM temperature2 WHERE session_id=%s order by value desc", (session_id))
-   temp2 = cur.fetchone()
-   temp_dict = {}
-   temp_dict["max_temp_1"] = DEFAULT_MAX_TEMP if temp1 == None else temp1
-   temp_dict["max_temp_2"] = DEFAULT_MAX_TEMP if temp2 == None else temp2
-   return temp_dict
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
+    cur.execute("SELECT value FROM temperature1 WHERE session_id=%s order by value desc", (session_id))
+    temp1 = cur.fetchone()
+    cur.execute("SELECT value FROM temperature2 WHERE session_id=%s order by value desc", (session_id))
+    temp2 = cur.fetchone()
+    temp_dict = {}
+    temp_dict["max_temp_1"] = DEFAULT_MAX_TEMP if temp1 == None else temp1[0]
+    temp_dict["max_temp_2"] = DEFAULT_MAX_TEMP if temp2 == None else temp2[0]
+    return temp_dict
 
 # get the minimum temperature recorded during the given session_id
 def get_min_ride_temp(session_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT value FROM temperature1 WHERE session_id=%s order by value asc", (session_id))
     temp1 = cur.fetchone()
     cur.execute("SELECT value FROM temperature2 WHERE session_id=%s order by value asc", (session_id))
     temp2 = cur.fetchone()
     temp_dict = {}
-    temp_dict["min_temp_1"] = DEFAULT_MIN_TEMP if temp1 == None else temp1
-    temp_dict["min_temp_2"] = DEFAULT_MIN_TEMP if temp2 == None else temp2
+    temp_dict["min_temp_1"] = DEFAULT_MIN_TEMP if temp1 == None else temp1[0]
+    temp_dict["min_temp_2"] = DEFAULT_MIN_TEMP if temp2 == None else temp2[0]
     return temp_dict
 
 
 # provides battery_id from user_id (needs to be changed in the future to support multiple batteries)
 def link_to_battery_id(user_id):
-    cur=conn.cursor()
+    conn_local = pymysql.connect(
+            host= 'capstone.cmkbscvpp696.us-east-1.rds.amazonaws.com',
+            port = 3306,
+            user = 'admin',
+            password = 'ChuckGroup3!',
+            db = 'default_app',
+            )
+    cur=conn_local.cursor()
     cur.execute("SELECT battery_id WHERE user_id=%s", (user_id))
     return cur.fetchone()
 

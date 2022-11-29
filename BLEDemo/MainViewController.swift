@@ -29,6 +29,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var currentBox: UIButton!
     
     @IBOutlet weak var tempBox2: UIButton!
+    var currentPercentageValue: Double = 0.0
+    var voltageValue: Double = 0.0
+    var currentValue: Double = 0.0
+    var batteryLifeValue: Double = 0.0
+    var powerValue: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +54,10 @@ class MainViewController: UIViewController {
         timer!.schedule(deadline: .now(), repeating: .seconds(10))
         timer!.setEventHandler { [weak self] in
             self?.getMostRecentBatteryData()
+            DispatchQueue.main.async {
+                // qos' default value is ´DispatchQoS.QoSClass.default`
+                self?.updateAllDataLabels()
+            }
         }
         timer!.resume()
     }
@@ -68,15 +77,23 @@ class MainViewController: UIViewController {
     }
     
     func getMostRecentBatteryData() {
-        BLEDemo.getMostRecentData(callback_func: self.updateAllDataLabels)
+        BLEDemo.getMostRecentData(callback_func: self.updateAllData)
     }
     
-    func updateAllDataLabels(newDataDict: [String: Double]) {
-        self.currentPercentage.text = String(format: "%.2f", newDataDict["current_percentage"]!) + "%"
-        self.voltageLabel.text = String(format: "%.2f", newDataDict["total_voltage"]!) + "V"
-        self.currentLabel.text = String(format: "%.2f", newDataDict["current"]!) + "A"
-        self.batteryLifeLabel.text = String(format: "%.2f", newDataDict["battery_life"]!) + " min"
-        self.powerLabel.text = String(format: "%.2f", newDataDict["power"]!) + "W"
+    func updateAllDataLabels() {
+        self.currentPercentage.text = String(format: "%.2f", self.currentPercentageValue) + "%"
+        self.voltageLabel.text = String(format: "%.2f", self.voltageValue) + "V"
+        self.currentLabel.text = String(format: "%.2f", self.currentValue) + "A"
+        self.batteryLifeLabel.text = String(format: "%.2f", self.batteryLifeValue) + " min"
+        self.powerLabel.text = String(format: "%.2f", self.powerValue) + "W"
+    }
+    
+    func updateAllData(newDataDict: [String: Double]) {
+        self.currentPercentageValue = newDataDict["current_percentage"] ?? 0.0
+        self.voltageValue = newDataDict["total_voltage"] ?? 0.0
+        self.currentValue = newDataDict["current"] ?? 0.0
+        self.batteryLifeValue = newDataDict["battery_life"] ?? 0.0
+        self.powerValue = newDataDict["power"] ?? 0.0
     }
 }
 

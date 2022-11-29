@@ -8,7 +8,7 @@
 
 import Foundation
 
-let urlBase = "http://10.0.1.144:5000/"
+let urlBase = "http://10.110.194.111:5000/"
 var sessionID = ""
 var userID = ""
 

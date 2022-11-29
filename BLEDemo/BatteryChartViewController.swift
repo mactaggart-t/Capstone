@@ -80,6 +80,10 @@ class BatteryChartViewController: UIViewController {
         timer!.schedule(deadline: .now(), repeating: .seconds(10))
         timer!.setEventHandler { [weak self] in
             self?.getBatteryPercentagesAndUpdateChart()
+            DispatchQueue.main.async {
+                // qos' default value is ´DispatchQoS.QoSClass.default`
+                self?.setData()
+            }
         }
         timer!.resume()
     }
@@ -98,7 +102,6 @@ class BatteryChartViewController: UIViewController {
             tempYValues.append(ChartDataEntry(x: pair[1], y: pair[0]))
         }
         yValues = tempYValues
-        self.setData()
     }
     
 

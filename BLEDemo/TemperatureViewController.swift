@@ -108,59 +108,40 @@ class TemperatureViewController: UIViewController {
         lowNum.text = low
         currNum.text = current
         
-        let currentString = current
-        let maxString = high
-        
-        let currValue = Int(currentString) ?? 0
-        let maxValue = Int(maxString) ?? 0
+        let currValue = Double(current) ?? 0
+        let maxValue = Double(high) ?? 0
+        let minValue = Double(low) ?? 0
+        let maxDiff = maxValue - minValue
+        let tickSize = maxDiff / 100.0
         
         if (currValue == maxValue){
             barWidth = maxWidth
         }else{
-            barWidth = currValue % 100 + minWidth
+            let actualDiff = currValue - minValue
+            let numTicks = actualDiff / tickSize
+            barWidth = Int(numTicks) + minWidth
         }
 
         marker.frame =  CGRect(x:barStartX, y: barStartY, width:barWidth, height: barHeight)
-        
-        
-        //let a: Int = Int(currNum.text ?? "")!
-        //if(a > 100){
-        
-        /*    let newHeight: CGFloat = 145
-            //width should stay the same - 45
-            UIView.animate(withDuration: 3.0, //1
-                delay: 0.0, //2
-                usingSpringWithDamping: 0.3, //3
-                initialSpringVelocity: 1, //4
-                options: UIView.AnimationOptions.curveEaseInOut, //5
-                animations: ({ //6
-                    self.marker.frame = CGRect(x: 0, y: -5, width: 45, height: newHeight)
-                    self.marker.center = self.view.center
-            }), completion: nil)//}*/
-        
-        
-        /*var newFrame = self.marker.frame
-        newFrame.size.height = 80*/
     }
     
     func setSize2(low: String, current: String, high: String){
         highNum2.text = high
         lowNum2.text = low
         currNum2.text = current
-        /*var newFrame = self.marker.frame
-        newFrame.size.height = 80
-         */
-        
-        let currentString2 = current
-        let maxString2 = high
-        
-        let currValue2 = Int(currentString2) ?? 0
-        let maxValue2 = Int(maxString2) ?? 0
+
+        let currValue2 = Double(current) ?? 0
+        let maxValue2 = Double(high) ?? 0
+        let minValue2 = Double(low) ?? 0
+        let maxDiff = maxValue2 - minValue2
+        let tickSize = maxDiff / 100.0
         
         if (currValue2 == maxValue2){
             barWidth2 = maxWidth
         }else{
-            barWidth2 = currValue2 % 100 + minWidth
+            let actualDiff = currValue2 - minValue2
+            let numTicks = actualDiff / tickSize
+            barWidth2 = Int(numTicks) + minWidth
         }
 
         marker2.frame =  CGRect(x:bar2StartX, y: bar2StartY, width:barWidth2, height: barHeight)
